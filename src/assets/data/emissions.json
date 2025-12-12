@@ -1,0 +1,45 @@
+[
+  {
+    "year": 2015,
+    "emissions": 5.2,
+    "emission_type": "CO2",
+    "country": "United Kingdom",
+    "activity": "Air travel"
+  },
+  {
+    "year": 2016,
+    "emissions": 2.9,
+    "emission_type": "N2O",
+    "country": "United Kingdom",
+    "activity": "Waste"
+  },
+  {
+    "year": 2017,
+    "emissions": 4.1,
+    "emission_type": "CO2",
+    "country": "United Kingdom",
+    "activity": "Air travel"
+  },
+  {
+    "year": 2018,
+    "emissions": 3.5,
+    "emission_type": "CH4",
+    "country": "United Kingdom",
+    "activity": "Agriculture"
+  },
+  {
+    "year": 2019,
+    "emissions": 6.3,
+    "emission_type": "CO2",
+    "country": "United Kingdom",
+    "activity": "Energy"
+  },
+  {
+    "year": 2020,
+    "emissions": 4.8,
+    "emission_type": "CO2",
+    "country": "United Kingdom",
+    "activity": "Air travel"
+  }
+]
+

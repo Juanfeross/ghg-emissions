@@ -1,0 +1,89 @@
+.table-card {
+  background-color: hsl(var(--card));
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  animation: fade-in-up 0.6s ease-out forwards;
+
+  &__title {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  &__content {
+    overflow-x: auto;
+    border-radius: 0.5rem;
+    border: 1px solid hsl(var(--border));
+  }
+
+  &__footer {
+    margin: 1rem 0 0 0;
+    text-align: center;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+}
+
+.table-header-row {
+  background-color: hsl(var(--muted));
+  opacity: 0.5;
+}
+
+.table-body-row {
+  border-bottom: 1px solid hsl(var(--border));
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: hsl(var(--muted));
+    opacity: 0.3;
+  }
+}
+
+.text-right {
+  text-align: right;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-mono {
+  font-family: 'Courier New', monospace;
+}
+
+:host ::ng-deep {
+  .bg-chart-co2\/15 {
+    background-color: hsl(from var(--chart-co2) h s calc(l * 0.15));
+    color: hsl(var(--chart-co2));
+    border-color: hsl(from var(--chart-co2) h s calc(l * 0.3));
+  }
+
+  .bg-chart-n2o\/15 {
+    background-color: hsl(from var(--chart-n2o) h s calc(l * 0.15));
+    color: hsl(var(--chart-n2o));
+    border-color: hsl(from var(--chart-n2o) h s calc(l * 0.3));
+  }
+
+  .bg-chart-ch4\/15 {
+    background-color: hsl(from var(--chart-ch4) h s calc(l * 0.15));
+    color: hsl(var(--chart-ch4));
+    border-color: hsl(from var(--chart-ch4) h s calc(l * 0.3));
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

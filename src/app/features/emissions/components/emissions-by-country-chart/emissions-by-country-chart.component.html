@@ -1,0 +1,11 @@
+<div class="chart-card" [style.animation-delay]="'300ms'">
+  <h3 class="chart-card__title">Emissions by Country</h3>
+  <div class="chart-card__content">
+    <canvas baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType">
+    </canvas>
+  </div>
+</div>
+

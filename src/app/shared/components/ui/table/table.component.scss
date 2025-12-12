@@ -1,0 +1,46 @@
+.table-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  font-size: 0.875rem;
+  caption-side: bottom;
+  border-collapse: collapse;
+
+  thead {
+    tr {
+      background-color: hsl(var(--muted));
+      opacity: 0.5;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid hsl(var(--border));
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: hsl(var(--muted));
+        opacity: 0.3;
+      }
+    }
+  }
+
+  th {
+    height: 3rem;
+    padding: 0 1rem;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: 600;
+    color: hsl(var(--muted-foreground));
+  }
+
+  td {
+    padding: 1rem;
+    vertical-align: middle;
+  }
+}
+

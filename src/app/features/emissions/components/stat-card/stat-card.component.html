@@ -1,0 +1,13 @@
+<div class="stat-card" [style.animation-delay]="animationDelay">
+  <div class="stat-card__content">
+    <div class="stat-card__main">
+      <p class="stat-card__title">{{ title }}</p>
+      <p class="stat-card__value">{{ displayValue }}</p>
+      <p *ngIf="subtitle" class="stat-card__subtitle">{{ subtitle }}</p>
+    </div>
+    <div class="stat-card__icon">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,54 @@
+<div class="filter-bar" [style.animation-delay]="'100ms'">
+  <div class="filter-bar__content">
+    <div class="filter-bar__label">
+      <svg class="filter-bar__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+      </svg>
+      <span class="filter-bar__text">Filters</span>
+    </div>
+
+    <app-select [value]="selectedCountry" (valueChange)="onCountryChange($event)" className="filter-bar__select">
+      <span select-value>{{ filters.country || 'All Countries' }}</span>
+      <div select-content>
+        <div class="select-option" (click)="onCountryChange('all')">All Countries</div>
+        <div class="select-option" *ngFor="let country of countries" (click)="onCountryChange(country)">
+          {{ country }}
+        </div>
+      </div>
+    </app-select>
+
+    <app-select [value]="selectedEmissionType" (valueChange)="onEmissionTypeChange($event)" className="filter-bar__select">
+      <span select-value>{{ filters.emissionType || 'All Types' }}</span>
+      <div select-content>
+        <div class="select-option" (click)="onEmissionTypeChange('all')">All Types</div>
+        <div class="select-option" *ngFor="let type of emissionTypes" (click)="onEmissionTypeChange(type)">
+          {{ type }}
+        </div>
+      </div>
+    </app-select>
+
+    <app-select [value]="selectedActivity" (valueChange)="onActivityChange($event)" className="filter-bar__select">
+      <span select-value>{{ filters.activity || 'All Activities' }}</span>
+      <div select-content>
+        <div class="select-option" (click)="onActivityChange('all')">All Activities</div>
+        <div class="select-option" *ngFor="let activity of activities" (click)="onActivityChange(activity)">
+          {{ activity }}
+        </div>
+      </div>
+    </app-select>
+
+    <app-button
+      *ngIf="hasActiveFilters"
+      variant="ghost"
+      size="sm"
+      (click)="clearFilters()"
+      className="filter-bar__clear"
+    >
+      <svg class="filter-bar__clear-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+      Clear
+    </app-button>
+  </div>
+</div>
+

@@ -1,0 +1,17 @@
+<div class="select" [class]="className">
+  <button
+    type="button"
+    (click)="toggle()"
+    (blur)="close()"
+    class="select__trigger"
+  >
+    <span class="select__value"><ng-content select="[select-value]"></ng-content></span>
+    <svg class="select__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+  <div *ngIf="isOpen" class="select__content" (click)="$event.stopPropagation()">
+    <ng-content select="[select-content]"></ng-content>
+  </div>
+</div>
+

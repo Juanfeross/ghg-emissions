@@ -6,3 +6,5 @@ export interface Emission {
   activity: string;
 }
 
+export type EmissionType = 'CO2' | 'N2O' | 'CH4';
+

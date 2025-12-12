@@ -46,9 +46,19 @@ export class EmissionsLineChartComponent implements OnInit, OnChanges {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: true,
-        position: 'bottom'
-      },
+              display: true,
+              position: 'bottom',
+              labels: {
+                padding: 15,
+                usePointStyle: true,
+                pointStyle: 'circle',
+                font: {
+                  size: 13,
+                  weight: 500
+                },
+                color: 'hsl(var(--foreground))'
+              }
+            },
       tooltip: {
         backgroundColor: 'hsl(var(--card))',
         borderColor: 'hsl(var(--border))',
@@ -62,23 +72,29 @@ export class EmissionsLineChartComponent implements OnInit, OnChanges {
     scales: {
       x: {
         grid: {
-          color: 'hsl(var(--border))',
+          color: 'rgba(0, 0, 0, 0.08)',
           lineWidth: 1
         },
         ticks: {
           color: 'hsl(var(--muted-foreground))',
           font: { size: 12 }
+        },
+        border: {
+          display: false
         }
       },
       y: {
         grid: {
-          color: 'hsl(var(--border))',
+          color: 'rgba(0, 0, 0, 0.08)',
           lineWidth: 1
         },
         ticks: {
           color: 'hsl(var(--muted-foreground))',
           font: { size: 12 },
           callback: (value) => `${value} Mt`
+        },
+        border: {
+          display: false
         }
       }
     }
@@ -124,31 +140,52 @@ export class EmissionsLineChartComponent implements OnInit, OnChanges {
         {
           data: [...co2Data],
           label: 'CO2',
-          borderColor: 'hsl(var(--chart-co2))',
-          backgroundColor: 'transparent',
+          borderColor: 'hsl(142, 76%, 36%)',
+          backgroundColor: 'hsla(142, 76%, 36%, 0.15)',
+          fill: true,
           borderWidth: 3,
-          pointRadius: 4,
-          pointHoverRadius: 6,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: 'hsl(142, 76%, 36%)',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2,
+          pointHoverBackgroundColor: 'hsl(142, 76%, 36%)',
+          pointHoverBorderColor: '#ffffff',
+          pointHoverBorderWidth: 3,
           tension: 0.4
         },
         {
           data: [...n2oData],
           label: 'N2O',
-          borderColor: 'hsl(var(--chart-n2o))',
-          backgroundColor: 'transparent',
+          borderColor: 'hsl(199, 89%, 58%)',
+          backgroundColor: 'hsla(199, 89%, 58%, 0.15)',
+          fill: true,
           borderWidth: 3,
-          pointRadius: 4,
-          pointHoverRadius: 6,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: 'hsl(199, 89%, 58%)',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2,
+          pointHoverBackgroundColor: 'hsl(199, 89%, 58%)',
+          pointHoverBorderColor: '#ffffff',
+          pointHoverBorderWidth: 3,
           tension: 0.4
         },
         {
           data: [...ch4Data],
           label: 'CH4',
-          borderColor: 'hsl(var(--chart-ch4))',
-          backgroundColor: 'transparent',
+          borderColor: 'hsl(25, 95%, 53%)',
+          backgroundColor: 'hsla(25, 95%, 53%, 0.15)',
+          fill: true,
           borderWidth: 3,
-          pointRadius: 4,
-          pointHoverRadius: 6,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: 'hsl(25, 95%, 53%)',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2,
+          pointHoverBackgroundColor: 'hsl(25, 95%, 53%)',
+          pointHoverBorderColor: '#ffffff',
+          pointHoverBorderWidth: 3,
           tension: 0.4
         }
       ]

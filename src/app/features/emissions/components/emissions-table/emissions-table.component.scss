@@ -1,24 +1,83 @@
 .table-card {
   background-color: hsl(var(--card));
   border-radius: 0.75rem;
-  padding: 1.5rem;
+  padding: 1.25rem;
   border: 1px solid hsl(var(--border));
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
   opacity: 0;
   animation: fade-in-up 0.6s ease-out forwards;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  }
 
   &__title {
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1.25rem 0;
     font-size: 1.125rem;
     font-weight: 600;
     color: hsl(var(--foreground));
     font-family: 'Space Grotesk', system-ui, sans-serif;
+    letter-spacing: -0.02em;
   }
 
   &__content {
     overflow-x: auto;
     border-radius: 0.5rem;
     border: 1px solid hsl(var(--border));
+    background-color: hsl(var(--card));
+    box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  }
+}
+
+.emissions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+
+  &__header-row {
+    background-color: hsl(var(--muted));
+    border-bottom: 2px solid hsl(var(--border));
+
+    th {
+      height: 3rem;
+      padding: 0 1rem;
+      text-align: left;
+      vertical-align: middle;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: hsl(var(--muted-foreground));
+
+      &.text-right {
+        text-align: right;
+      }
+    }
+  }
+
+  &__body-row {
+    transition: background-color 0.2s ease;
+    background-color: transparent;
+    border-bottom: 1px solid hsl(var(--border));
+
+    &:hover {
+      background-color: hsl(var(--muted) / 0.5);
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    td {
+      padding: 0.875rem 1rem;
+      vertical-align: middle;
+      border-bottom: 1px solid hsl(var(--border));
+    }
+
+    &:last-child td {
+      border-bottom: none;
+    }
   }
 
   &__footer {
@@ -29,20 +88,6 @@
   }
 }
 
-.table-header-row {
-  background-color: hsl(var(--muted));
-  opacity: 0.5;
-}
-
-.table-body-row {
-  border-bottom: 1px solid hsl(var(--border));
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: hsl(var(--muted));
-    opacity: 0.3;
-  }
-}
 
 .text-right {
   text-align: right;
@@ -58,21 +103,21 @@
 
 :host ::ng-deep {
   .bg-chart-co2\/15 {
-    background-color: hsl(from var(--chart-co2) h s calc(l * 0.15));
-    color: hsl(var(--chart-co2));
-    border-color: hsl(from var(--chart-co2) h s calc(l * 0.3));
+    background-color: hsl(142, 76%, 36%);
+    color: #ffffff;
+    border-color: hsl(142, 76%, 30%);
   }
 
   .bg-chart-n2o\/15 {
-    background-color: hsl(from var(--chart-n2o) h s calc(l * 0.15));
-    color: hsl(var(--chart-n2o));
-    border-color: hsl(from var(--chart-n2o) h s calc(l * 0.3));
+    background-color: hsl(199, 89%, 58%);
+    color: #ffffff;
+    border-color: hsl(199, 89%, 52%);
   }
 
   .bg-chart-ch4\/15 {
-    background-color: hsl(from var(--chart-ch4) h s calc(l * 0.15));
-    color: hsl(var(--chart-ch4));
-    border-color: hsl(from var(--chart-ch4) h s calc(l * 0.3));
+    background-color: hsl(25, 95%, 53%);
+    color: #ffffff;
+    border-color: hsl(25, 95%, 47%);
   }
 }
 

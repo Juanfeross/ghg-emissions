@@ -23,11 +23,14 @@ ChartJS.register(
 );
 
 const COLORS = [
-  'hsl(var(--chart-co2))',
-  'hsl(var(--chart-n2o))',
-  'hsl(var(--chart-ch4))',
-  'hsl(var(--accent))',
-  'hsl(var(--chart-other))',
+  'hsl(142, 76%, 36%)',
+  'hsl(199, 89%, 58%)',
+  'hsl(25, 95%, 53%)',
+  'hsl(180, 70%, 45%)',
+  'hsl(280, 65%, 60%)',
+  'hsl(340, 82%, 52%)',
+  'hsl(12, 76%, 61%)',
+  'hsl(262, 83%, 58%)',
 ];
 
 @Component({
@@ -67,29 +70,35 @@ export class EmissionsByCountryChartComponent implements OnInit, OnChanges {
         }
       }
     },
-    scales: {
-      x: {
-        type: 'linear',
-        grid: {
-          color: 'hsl(var(--border))',
-          lineWidth: 1
-        },
-        ticks: {
-          color: 'hsl(var(--muted-foreground))',
-          font: { size: 12 },
-          callback: (value) => `${value} Mt`
-        }
-      },
-      y: {
-        grid: {
-          display: false
-        },
-        ticks: {
-          color: 'hsl(var(--muted-foreground))',
-          font: { size: 12 }
-        }
-      }
-    }
+           scales: {
+             x: {
+               type: 'linear',
+               grid: {
+                 color: 'rgba(0, 0, 0, 0.08)',
+                 lineWidth: 1
+               },
+               ticks: {
+                 color: 'hsl(var(--muted-foreground))',
+                 font: { size: 12 },
+                 callback: (value) => `${value} Mt`
+               },
+               border: {
+                 display: false
+               }
+             },
+             y: {
+               grid: {
+                 display: false
+               },
+               ticks: {
+                 color: 'hsl(var(--muted-foreground))',
+                 font: { size: 12 }
+               },
+               border: {
+                 display: false
+               }
+             }
+           }
   };
 
   public barChartType: ChartType = 'bar';
@@ -131,16 +140,19 @@ export class EmissionsByCountryChartComponent implements OnInit, OnChanges {
       COLORS[index % COLORS.length]
     );
 
-    this.barChartData = {
-      labels: [...labels],
-      datasets: [{
-        data: [...values],
-        backgroundColor: [...backgroundColors],
-        borderColor: [...backgroundColors],
-        borderWidth: 0,
-        borderRadius: 6
-      }]
-    };
+           this.barChartData = {
+             labels: [...labels],
+             datasets: [{
+               data: [...values],
+               backgroundColor: [...backgroundColors],
+               borderColor: [...backgroundColors.map(c => c.replace(')', ', 0.95)'))],
+               borderWidth: 2,
+               borderRadius: 6,
+               borderSkipped: false,
+               barThickness: 'flex',
+               maxBarThickness: 40
+             }]
+           };
   }
 }
 

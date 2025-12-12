@@ -1,16 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Emission } from '../../../../core/models';
-import { 
-  TableComponent, 
-  TableHeaderComponent, 
-  TableBodyComponent, 
-  TableRowComponent, 
-  TableHeadComponent, 
-  TableCellComponent 
-} from '../../../../shared/components/ui/table/table.component';
 import { BadgeComponent } from '../../../../shared/components/ui/badge/badge.component';
-import { cn } from '../../../../shared/utils/cn.util';
 
 function getEmissionTypeBadgeVariant(type: string): string {
   switch (type) {
@@ -29,13 +20,7 @@ function getEmissionTypeBadgeVariant(type: string): string {
   selector: 'app-emissions-table',
   standalone: true,
   imports: [
-    CommonModule, 
-    TableComponent,
-    TableHeaderComponent,
-    TableBodyComponent,
-    TableRowComponent,
-    TableHeadComponent,
-    TableCellComponent,
+    CommonModule,
     BadgeComponent
   ],
   templateUrl: './emissions-table.component.html',
@@ -45,7 +30,7 @@ export class EmissionsTableComponent {
   @Input() data: Emission[] = [];
 
   get sortedData(): Emission[] {
-    return [...this.data].sort((a, b) => 
+    return [...this.data].sort((a, b) =>
       b.year - a.year || b.emissions - a.emissions
     );
   }

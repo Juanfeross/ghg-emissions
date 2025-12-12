@@ -3,15 +3,36 @@
   align-items: center;
   border-radius: 9999px;
   border: 1px solid transparent;
-  padding: 0.125rem 0.625rem;
+  padding: 0.25rem 0.75rem;
   font-size: 0.75rem;
   font-weight: 600;
   transition: all 0.2s ease;
+  white-space: nowrap;
 
   &--outline {
     color: hsl(var(--foreground));
     border-color: hsl(var(--border));
     background-color: transparent;
+  }
+}
+
+:host ::ng-deep {
+  .bg-chart-co2\/15 {
+    background-color: hsl(142, 76%, 36%) !important;
+    color: #ffffff !important;
+    border-color: hsl(142, 76%, 30%) !important;
+  }
+
+  .bg-chart-n2o\/15 {
+    background-color: hsl(199, 89%, 58%) !important;
+    color: #ffffff !important;
+    border-color: hsl(199, 89%, 52%) !important;
+  }
+
+  .bg-chart-ch4\/15 {
+    background-color: hsl(25, 95%, 53%) !important;
+    color: #ffffff !important;
+    border-color: hsl(25, 95%, 47%) !important;
   }
 }
 

@@ -16,6 +16,8 @@ interface FilterBarData {
   countries: string[];
   activities: string[];
   emissionTypes: EmissionType[];
+  yearRange: [number, number];
+  emissionsRange: [number, number];
 }
 
 @Component({
@@ -46,13 +48,17 @@ export class EmissionChartComponent implements OnInit {
       this.emissionsService.filters$,
       this.emissionsService.uniqueCountries$,
       this.emissionsService.uniqueActivities$,
-      this.emissionsService.uniqueEmissionTypes$
+      this.emissionsService.uniqueEmissionTypes$,
+      this.emissionsService.yearRange$,
+      this.emissionsService.emissionsRange$
     ]).pipe(
-      map(([filters, countries, activities, emissionTypes]) => ({
+      map(([filters, countries, activities, emissionTypes, yearRange, emissionsRange]) => ({
         filters,
         countries,
         activities,
-        emissionTypes
+        emissionTypes,
+        yearRange,
+        emissionsRange
       }))
     );
   }

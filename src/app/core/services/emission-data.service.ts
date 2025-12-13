@@ -11,10 +11,12 @@ import { FilterState, AggregatedData, ChartDataPoint } from '../models/filter.in
 export class EmissionDataService {
   private dataSubject = new BehaviorSubject<Emission[]>([]);
   private filtersSubject = new BehaviorSubject<FilterState>({
-    country: null,
-    emissionType: null,
-    activity: null,
+    countries: [],
+    emissionTypes: [],
+    activities: [],
     yearRange: null,
+    minEmissions: null,
+    maxEmissions: null,
   });
 
   data$ = this.dataSubject.asObservable();
@@ -77,14 +79,36 @@ export class EmissionDataService {
     );
   }
 
+  get yearRange$(): Observable<[number, number]> {
+    return this.data$.pipe(
+      map(data => {
+        if (!data || data.length === 0) return [2015, 2023];
+        const years = data.map(item => item.year);
+        return [Math.min(...years), Math.max(...years)];
+      })
+    );
+  }
+
+  get emissionsRange$(): Observable<[number, number]> {
+    return this.data$.pipe(
+      map(data => {
+        if (!data || data.length === 0) return [0, 10];
+        const emissions = data.map(item => item.emissions);
+        return [Math.min(...emissions), Math.max(...emissions)];
+      })
+    );
+  }
+
   private filterData(data: Emission[], filters: FilterState): Emission[] {
     return data.filter(item => {
-      if (filters.country && item.country !== filters.country) return false;
-      if (filters.emissionType && item.emission_type !== filters.emissionType) return false;
-      if (filters.activity && item.activity !== filters.activity) return false;
+      if (filters.countries.length > 0 && !filters.countries.includes(item.country)) return false;
+      if (filters.emissionTypes.length > 0 && !filters.emissionTypes.includes(item.emission_type)) return false;
+      if (filters.activities.length > 0 && !filters.activities.includes(item.activity)) return false;
       if (filters.yearRange) {
         if (item.year < filters.yearRange[0] || item.year > filters.yearRange[1]) return false;
       }
+      if (filters.minEmissions !== null && item.emissions < filters.minEmissions) return false;
+      if (filters.maxEmissions !== null && item.emissions > filters.maxEmissions) return false;
       return true;
     });
   }

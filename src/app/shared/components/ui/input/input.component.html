@@ -1,0 +1,11 @@
+<input
+  [type]="type"
+  [placeholder]="placeholder"
+  [value]="value"
+  [min]="min !== null ? min : undefined"
+  [max]="max !== null ? max : undefined"
+  [class]="className"
+  (input)="onInput($event)"
+  class="input"
+/>
+

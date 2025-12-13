@@ -1,10 +1,12 @@
 import { Emission } from './emission.interface';
 
 export interface FilterState {
-  country: string | null;
-  emissionType: string | null;
-  activity: string | null;
+  countries: string[];
+  emissionTypes: string[];
+  activities: string[];
   yearRange: [number, number] | null;
+  minEmissions: number | null;
+  maxEmissions: number | null;
 }
 
 export interface ChartDataPoint {

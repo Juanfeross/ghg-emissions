@@ -1,42 +1,14 @@
 <div class="filter-bar" [style.animation-delay]="'100ms'">
-  <div class="filter-bar__content">
-    <div class="filter-bar__label">
+  <div class="filter-bar__header">
+    <div class="filter-bar__title">
       <svg class="filter-bar__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
       </svg>
       <span class="filter-bar__text">Filters</span>
+      <span *ngIf="hasActiveFilters" class="filter-bar__badge">
+        {{ getActiveFiltersCount() }}
+      </span>
     </div>
-
-    <app-select [value]="selectedCountry" (valueChange)="onCountryChange($event)" className="filter-bar__select">
-      <span select-value>{{ filters.country || 'All Countries' }}</span>
-      <div select-content>
-        <div class="select-option" (click)="onCountryChange('all')">All Countries</div>
-        <div class="select-option" *ngFor="let country of countries" (click)="onCountryChange(country)">
-          {{ country }}
-        </div>
-      </div>
-    </app-select>
-
-    <app-select [value]="selectedEmissionType" (valueChange)="onEmissionTypeChange($event)" className="filter-bar__select">
-      <span select-value>{{ filters.emissionType || 'All Types' }}</span>
-      <div select-content>
-        <div class="select-option" (click)="onEmissionTypeChange('all')">All Types</div>
-        <div class="select-option" *ngFor="let type of emissionTypes" (click)="onEmissionTypeChange(type)">
-          {{ type }}
-        </div>
-      </div>
-    </app-select>
-
-    <app-select [value]="selectedActivity" (valueChange)="onActivityChange($event)" className="filter-bar__select">
-      <span select-value>{{ filters.activity || 'All Activities' }}</span>
-      <div select-content>
-        <div class="select-option" (click)="onActivityChange('all')">All Activities</div>
-        <div class="select-option" *ngFor="let activity of activities" (click)="onActivityChange(activity)">
-          {{ activity }}
-        </div>
-      </div>
-    </app-select>
-
     <app-button
       *ngIf="hasActiveFilters"
       variant="ghost"
@@ -47,8 +19,183 @@
       <svg class="filter-bar__clear-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
       </svg>
-      Clear
+      Clear All
     </app-button>
   </div>
-</div>
 
+  <div class="filter-bar__content">
+    <div class="filter-bar__row">
+      <app-multi-select
+        [options]="countries"
+        [selectedValues]="filters.countries"
+        [placeholder]="'All Countries'"
+        [label]="'Countries'"
+        [searchPlaceholder]="'Search countries...'"
+        (selectionChange)="onCountriesChange($event)"
+        className="filter-bar__filter"
+      ></app-multi-select>
+
+      <app-multi-select
+        [options]="emissionTypes"
+        [selectedValues]="filters.emissionTypes"
+        [placeholder]="'All Types'"
+        [label]="'Emission Types'"
+        [searchPlaceholder]="'Search types...'"
+        (selectionChange)="onEmissionTypesChange($event)"
+        className="filter-bar__filter"
+      ></app-multi-select>
+
+      <app-multi-select
+        [options]="activities"
+        [selectedValues]="filters.activities"
+        [placeholder]="'All Activities'"
+        [label]="'Activities'"
+        [searchPlaceholder]="'Search activities...'"
+        (selectionChange)="onActivitiesChange($event)"
+        className="filter-bar__filter"
+      ></app-multi-select>
+    </div>
+
+    <div class="filter-bar__row filter-bar__row--ranges" [class.filter-bar__row--visible]="isExpanded">
+      <div class="filter-bar__range-group">
+        <label class="filter-bar__range-label">Year Range</label>
+        <div class="filter-bar__range-inputs">
+          <app-input
+            type="number"
+            [placeholder]="'Min: ' + yearRange[0]"
+            [value]="filters.yearRange ? filters.yearRange[0] : ''"
+            [min]="yearRange[0]"
+            [max]="yearRange[1]"
+            (valueChange)="onYearMinChange($event)"
+            className="filter-bar__range-input"
+          ></app-input>
+          <span class="filter-bar__range-separator">-</span>
+          <app-input
+            type="number"
+            [placeholder]="'Max: ' + yearRange[1]"
+            [value]="filters.yearRange ? filters.yearRange[1] : ''"
+            [min]="yearRange[0]"
+            [max]="yearRange[1]"
+            (valueChange)="onYearMaxChange($event)"
+            className="filter-bar__range-input"
+          ></app-input>
+        </div>
+      </div>
+
+      <div class="filter-bar__range-group">
+        <label class="filter-bar__range-label">Emissions Range (Mt)</label>
+        <div class="filter-bar__range-inputs">
+          <app-input
+            type="number"
+            [placeholder]="'Min: ' + emissionsRange[0]"
+            [value]="filters.minEmissions !== null ? filters.minEmissions : ''"
+            [min]="emissionsRange[0]"
+            [max]="emissionsRange[1]"
+            (valueChange)="onMinEmissionsChange($event)"
+            className="filter-bar__range-input"
+            step="0.1"
+          ></app-input>
+          <span class="filter-bar__range-separator">-</span>
+          <app-input
+            type="number"
+            [placeholder]="'Max: ' + emissionsRange[1]"
+            [value]="filters.maxEmissions !== null ? filters.maxEmissions : ''"
+            [min]="emissionsRange[0]"
+            [max]="emissionsRange[1]"
+            (valueChange)="onMaxEmissionsChange($event)"
+            className="filter-bar__range-input"
+            step="0.1"
+          ></app-input>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="filter-bar__toggle" (click)="toggleExpand()">
+    <span>{{ isExpanded ? 'Show Less' : 'Show More' }}</span>
+    <svg
+      class="filter-bar__toggle-icon"
+      [class.filter-bar__toggle-icon--expanded]="isExpanded"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+
+  <div *ngIf="hasActiveFilters" class="filter-bar__active-filters">
+    <div *ngFor="let country of filters.countries" class="filter-bar__chip">
+      <span>Country: {{ country }}</span>
+      <svg
+        (click)="removeCountryFilter(country)"
+        class="filter-bar__chip-remove"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </div>
+    <div *ngFor="let type of filters.emissionTypes" class="filter-bar__chip">
+      <span>Type: {{ type }}</span>
+      <svg
+        (click)="removeTypeFilter(type)"
+        class="filter-bar__chip-remove"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </div>
+    <div *ngFor="let activity of filters.activities" class="filter-bar__chip">
+      <span>Activity: {{ activity }}</span>
+      <svg
+        (click)="removeActivityFilter(activity)"
+        class="filter-bar__chip-remove"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </div>
+    <div *ngIf="filters.yearRange" class="filter-bar__chip">
+      <span>Years: {{ filters.yearRange[0] }} - {{ filters.yearRange[1] }}</span>
+      <svg
+        (click)="removeYearFilter()"
+        class="filter-bar__chip-remove"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </div>
+    <div *ngIf="filters.minEmissions !== null" class="filter-bar__chip">
+      <span>Min Emissions: {{ filters.minEmissions }} Mt</span>
+      <svg
+        (click)="removeMinEmissionsFilter()"
+        class="filter-bar__chip-remove"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </div>
+    <div *ngIf="filters.maxEmissions !== null" class="filter-bar__chip">
+      <span>Max Emissions: {{ filters.maxEmissions }} Mt</span>
+      <svg
+        (click)="removeMaxEmissionsFilter()"
+        class="filter-bar__chip-remove"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </div>
+  </div>
+</div>

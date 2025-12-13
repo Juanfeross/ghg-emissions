@@ -58,17 +58,20 @@ export class EmissionsByCountryChartComponent implements OnInit, OnChanges {
         display: false
       },
       tooltip: {
-        backgroundColor: 'hsl(var(--card))',
-        borderColor: 'hsl(var(--border))',
+        backgroundColor: 'hsl(0, 0%, 100%)',
+        borderColor: 'rgba(0, 0, 0, 0.1)',
         borderWidth: 1,
-        titleColor: 'hsl(var(--foreground))',
-        bodyColor: 'hsl(var(--muted-foreground))',
+        titleColor: 'hsl(0, 0%, 0%)',
+        bodyColor: 'hsl(0, 0%, 0%)',
         padding: 12,
         cornerRadius: 8,
+        displayColors: true,
+        boxPadding: 6,
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
         callbacks: {
-          label: (context) => context.parsed.x ? `${context.parsed.x.toFixed(2)} Mt` : '0 Mt'
+          label: (context: any) => context.parsed.x ? `${context.parsed.x.toFixed(2)} Mt` : '0 Mt'
         }
-      }
+      } as any
     },
            scales: {
              x: {

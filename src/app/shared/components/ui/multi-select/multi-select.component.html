@@ -1,0 +1,78 @@
+<div class="multi-select">
+  <label *ngIf="label" class="multi-select__label">{{ label }}</label>
+  <div class="multi-select__container" #container>
+    <button
+      type="button"
+      (click)="toggle($event)"
+      class="multi-select__trigger"
+      [class.multi-select__trigger--active]="isOpen"
+    >
+      <div class="multi-select__value">
+        <span *ngIf="selectedValues.length === 0" class="multi-select__placeholder">{{ placeholder }}</span>
+        <div *ngIf="selectedValues.length > 0" class="multi-select__chips">
+          <span
+            *ngFor="let value of selectedValues.slice(0, 2)"
+            class="multi-select__chip"
+          >
+            {{ value }}
+            <svg
+              (click)="removeFilter(value, $event)"
+              class="multi-select__chip-remove"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </span>
+          <span *ngIf="selectedValues.length > 2" class="multi-select__chip-count">
+            +{{ selectedValues.length - 2 }}
+          </span>
+        </div>
+      </div>
+      <svg class="multi-select__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+    <div *ngIf="isOpen" class="multi-select__dropdown" (click)="$event.stopPropagation()">
+      <div class="multi-select__search">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (input)="onSearchInput()"
+          [placeholder]="searchPlaceholder"
+          class="multi-select__search-input"
+          (click)="$event.stopPropagation()"
+          (focus)="$event.stopPropagation()"
+        />
+      </div>
+      <div class="multi-select__actions" *ngIf="filteredOptions.length > 0">
+        <button type="button" (click)="selectAll()" class="multi-select__action-btn">
+          Select All
+        </button>
+        <button type="button" (click)="clearAll()" class="multi-select__action-btn">
+          Clear
+        </button>
+      </div>
+      <div class="multi-select__options">
+        <div
+          *ngFor="let option of filteredOptions"
+          (click)="toggleOption(option); $event.stopPropagation()"
+          class="multi-select__option"
+          [class.multi-select__option--selected]="isSelected(option)"
+        >
+          <div class="multi-select__checkbox">
+            <svg *ngIf="isSelected(option)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <span class="multi-select__option-text">{{ option }}</span>
+        </div>
+        <div *ngIf="filteredOptions.length === 0" class="multi-select__empty">
+          No options found
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,18 +1,221 @@
 <div class="table-card" [style.animation-delay]="'400ms'">
-  <h3 class="table-card__title">Detailed Emissions Data</h3>
+  <div class="table-card__header">
+    <h3 class="table-card__title">Detailed Emissions Data</h3>
+    <button
+      *ngIf="hasTableFilters"
+      type="button"
+      (click)="clearTableFilters()"
+      class="table-card__clear-filters"
+    >
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+      Clear Filters
+    </button>
+  </div>
+
+  <div class="table-card__filters">
+    <div class="table-filters">
+      <div class="table-filters__search">
+        <app-input
+          type="text"
+          placeholder="Search..."
+          [value]="tableFilters.search"
+          (valueChange)="onSearchChange($event)"
+          className="table-filters__search-input"
+        ></app-input>
+      </div>
+
+      <div class="table-filters__groups" [class.table-filters__groups--expanded]="isFiltersExpanded">
+        <div class="table-filters__group">
+          <label class="table-filters__label">Filter by Country</label>
+          <div class="table-filters__chips">
+            <button
+              *ngFor="let country of uniqueCountries"
+              type="button"
+              (click)="toggleCountry(country)"
+              class="table-filters__chip"
+              [class.table-filters__chip--active]="tableFilters.countries.includes(country)"
+            >
+              {{ country }}
+            </button>
+          </div>
+        </div>
+
+        <div class="table-filters__group">
+          <label class="table-filters__label">Filter by Type</label>
+          <div class="table-filters__chips">
+            <button
+              *ngFor="let type of uniqueTypes"
+              type="button"
+              (click)="toggleType(type)"
+              class="table-filters__chip"
+              [class.table-filters__chip--active]="tableFilters.types.includes(type)"
+            >
+              {{ type }}
+            </button>
+          </div>
+        </div>
+
+        <div class="table-filters__group">
+          <label class="table-filters__label">Filter by Activity</label>
+          <div class="table-filters__chips">
+            <button
+              *ngFor="let activity of uniqueActivities"
+              type="button"
+              (click)="toggleActivity(activity)"
+              class="table-filters__chip"
+              [class.table-filters__chip--active]="tableFilters.activities.includes(activity)"
+            >
+              {{ activity }}
+            </button>
+          </div>
+        </div>
+
+        <div class="table-filters__group">
+          <label class="table-filters__label">Year Range</label>
+          <div class="table-filters__year-range">
+            <app-input
+              type="number"
+              [placeholder]="'From: ' + yearRange[0]"
+              [value]="tableFilters.yearFrom || ''"
+              [min]="yearRange[0]"
+              [max]="yearRange[1]"
+              (valueChange)="onYearFromChange($event)"
+              className="table-filters__year-input"
+            ></app-input>
+            <span class="table-filters__year-separator">-</span>
+            <app-input
+              type="number"
+              [placeholder]="'To: ' + yearRange[1]"
+              [value]="tableFilters.yearTo || ''"
+              [min]="yearRange[0]"
+              [max]="yearRange[1]"
+              (valueChange)="onYearToChange($event)"
+              className="table-filters__year-input"
+            ></app-input>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="table-filters__toggle" (click)="toggleFiltersExpand()">
+      <span>{{ isFiltersExpanded ? 'Show Less' : 'Show More' }}</span>
+      <svg
+        class="table-filters__toggle-icon"
+        [class.table-filters__toggle-icon--expanded]="isFiltersExpanded"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+  </div>
+
   <div class="table-card__content">
     <table class="emissions-table">
       <thead>
         <tr class="emissions-table__header-row">
-          <th>Year</th>
-          <th>Country</th>
-          <th>Activity</th>
-          <th>Type</th>
-          <th class="text-right">Emissions (Mt)</th>
+          <th>
+            <button
+              type="button"
+              (click)="setSortBy('year')"
+              class="emissions-table__sort-button"
+            >
+              Year
+              <svg
+                *ngIf="tableFilters.sortBy === 'year'"
+                class="emissions-table__sort-icon"
+                [class.emissions-table__sort-icon--desc]="tableFilters.sortOrder === 'desc'"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+              </svg>
+            </button>
+          </th>
+          <th>
+            <button
+              type="button"
+              (click)="setSortBy('country')"
+              class="emissions-table__sort-button"
+            >
+              Country
+              <svg
+                *ngIf="tableFilters.sortBy === 'country'"
+                class="emissions-table__sort-icon"
+                [class.emissions-table__sort-icon--desc]="tableFilters.sortOrder === 'desc'"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+              </svg>
+            </button>
+          </th>
+          <th>
+            <button
+              type="button"
+              (click)="setSortBy('activity')"
+              class="emissions-table__sort-button"
+            >
+              Activity
+              <svg
+                *ngIf="tableFilters.sortBy === 'activity'"
+                class="emissions-table__sort-icon"
+                [class.emissions-table__sort-icon--desc]="tableFilters.sortOrder === 'desc'"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+              </svg>
+            </button>
+          </th>
+          <th>
+            <button
+              type="button"
+              (click)="setSortBy('type')"
+              class="emissions-table__sort-button"
+            >
+              Type
+              <svg
+                *ngIf="tableFilters.sortBy === 'type'"
+                class="emissions-table__sort-icon"
+                [class.emissions-table__sort-icon--desc]="tableFilters.sortOrder === 'desc'"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+              </svg>
+            </button>
+          </th>
+          <th class="text-right">
+            <button
+              type="button"
+              (click)="setSortBy('emissions')"
+              class="emissions-table__sort-button emissions-table__sort-button--right"
+            >
+              Emissions (Mt)
+              <svg
+                *ngIf="tableFilters.sortBy === 'emissions'"
+                class="emissions-table__sort-icon"
+                [class.emissions-table__sort-icon--desc]="tableFilters.sortOrder === 'desc'"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+              </svg>
+            </button>
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of sortedData; let i = index" class="emissions-table__body-row">
+        <tr *ngFor="let item of paginatedData; let i = index" class="emissions-table__body-row">
           <td class="font-medium">{{ item.year }}</td>
           <td>{{ item.country }}</td>
           <td>{{ item.activity }}</td>
@@ -25,11 +228,51 @@
             {{ item.emissions.toFixed(2) }}
           </td>
         </tr>
+        <tr *ngIf="paginatedData.length === 0" class="emissions-table__empty-row">
+          <td colspan="5" class="emissions-table__empty-cell">
+            No data found
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
-  <p class="table-card__footer">
-    Showing {{ data.length }} record{{ data.length !== 1 ? 's' : '' }}
-  </p>
+  <div class="table-card__pagination">
+    <div class="pagination-info">
+      Showing {{ startItem }}-{{ endItem }} of {{ sortedData.length }} record{{ sortedData.length !== 1 ? 's' : '' }}
+    </div>
+    <div class="pagination-controls" *ngIf="totalPages > 1">
+      <button
+        class="pagination-button"
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+        type="button"
+      >
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      <div class="pagination-pages">
+        <button
+          *ngFor="let page of getPageNumbers(); let i = index"
+          class="pagination-button pagination-button--page"
+          [class.pagination-button--active]="page === currentPage"
+          (click)="page !== null && goToPage(page)"
+          [disabled]="page === null"
+          type="button"
+        >
+          {{ page !== null ? page : '...' }}
+        </button>
+      </div>
+      <button
+        class="pagination-button"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+        type="button"
+      >
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
 </div>
-

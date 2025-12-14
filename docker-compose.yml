@@ -1,0 +1,19 @@
+services:
+  ghg-emissions:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ghg-emissions-app
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+    networks:
+      - ghg-network
+
+networks:
+  ghg-network:
+    driver: bridge
+

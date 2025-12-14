@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { EmissionChartComponent } from './components/emission-chart/emission-chart.component';
+import { DashboardComponent } from './presentation/pages/dashboard/dashboard.component';
 
 export const emissionsRoutes: Routes = [
   {
     path: '',
-    component: EmissionChartComponent
+    component: DashboardComponent
   }
 ];
 

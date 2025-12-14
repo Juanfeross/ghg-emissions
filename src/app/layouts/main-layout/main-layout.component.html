@@ -1,0 +1,12 @@
+<div class="main-layout">
+  <main id="main-content" class="main-layout__container" role="main">
+    <app-header></app-header>
+
+    <div class="main-layout__content">
+      <ng-content></ng-content>
+    </div>
+
+    <app-footer [style.animation-delay]="'500ms'"></app-footer>
+  </main>
+</div>
+

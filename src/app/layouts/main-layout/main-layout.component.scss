@@ -1,0 +1,23 @@
+.main-layout {
+  min-height: 100vh;
+  background-color: hsl(var(--background));
+  padding: 2rem 1rem;
+
+  @media (min-width: 640px) {
+    padding: 2rem 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 2rem 2rem;
+  }
+
+  &__container {
+    margin: 0 auto;
+    max-width: 1280px;
+  }
+
+  &__content {
+    width: 100%;
+  }
+}
+

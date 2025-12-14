@@ -1,0 +1,14 @@
+.error-message {
+  padding: 1rem;
+  background-color: hsl(var(--destructive) / 0.1);
+  border: 1px solid hsl(var(--destructive));
+  border-radius: 0.5rem;
+  color: hsl(var(--destructive));
+
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+}
+

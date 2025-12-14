@@ -45,6 +45,49 @@
   --chart-country-8: 262 83% 58%;
 }
 
+.dark {
+  --background: 150 20% 8%;
+  --foreground: 150 10% 95%;
+
+  --card: 150 15% 12%;
+  --card-foreground: 150 10% 95%;
+
+  --popover: 150 15% 12%;
+  --popover-foreground: 150 10% 95%;
+
+  --primary: 158 64% 42%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 150 15% 18%;
+  --secondary-foreground: 150 10% 90%;
+
+  --muted: 150 10% 20%;
+  --muted-foreground: 150 10% 65%;
+
+  --accent: 168 76% 46%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 150 10% 25%;
+  --input: 150 10% 25%;
+  --ring: 158 64% 42%;
+
+  --chart-co2: 142 76% 46%;
+  --chart-n2o: 199 89% 68%;
+  --chart-ch4: 25 95% 63%;
+  --chart-other: 280 65% 70%;
+  --chart-country-1: 221 83% 63%;
+  --chart-country-2: 142 76% 46%;
+  --chart-country-3: 199 89% 58%;
+  --chart-country-4: 43 96% 66%;
+  --chart-country-5: 280 65% 70%;
+  --chart-country-6: 340 82% 62%;
+  --chart-country-7: 12 76% 71%;
+  --chart-country-8: 262 83% 68%;
+}
+
 * {
   margin: 0;
   padding: 0;

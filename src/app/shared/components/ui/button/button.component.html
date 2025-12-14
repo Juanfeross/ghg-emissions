@@ -1,4 +1,10 @@
-<button [class]="buttonClasses" [disabled]="disabled">
+<button
+  [class]="buttonClasses"
+  [disabled]="disabled"
+  [attr.aria-disabled]="disabled"
+  [attr.aria-label]="ariaLabel"
+  [attr.type]="type"
+>
   <ng-content></ng-content>
 </button>
 

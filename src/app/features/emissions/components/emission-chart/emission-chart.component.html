@@ -1,5 +1,5 @@
 <div class="dashboard">
-  <div class="dashboard__container">
+  <main id="main-content" class="dashboard__container" role="main">
     <app-header></app-header>
 
     <app-filter-bar
@@ -82,9 +82,9 @@
       ></app-emissions-table>
     </div>
 
-    <footer class="dashboard__footer" [style.animation-delay]="'500ms'">
+    <footer class="dashboard__footer" [style.animation-delay]="'500ms'" role="contentinfo">
       <p>Built with Angular, TypeScript & Chart.js</p>
       <p>GHG Emissions Visualization Dashboard © 2024</p>
     </footer>
-  </div>
+  </main>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChild, effect } from '@angular/core';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import {
@@ -13,6 +13,7 @@ import {
   Legend,
 } from 'chart.js';
 import { ChartDataPoint } from '../../../../core/models';
+import { ThemeService } from '../../../../core/services/theme.service';
 
 ChartJS.register(
   CategoryScale,
@@ -41,71 +42,94 @@ export class EmissionsLineChartComponent implements OnInit, OnChanges {
     labels: []
   };
 
-  public lineChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-              display: true,
-              position: 'bottom',
-              labels: {
-                padding: 15,
-                usePointStyle: true,
-                pointStyle: 'circle',
-                font: {
-                  size: 13,
-                  weight: 500
-                },
-                color: 'hsl(var(--foreground))'
-              }
+  public lineChartOptions: ChartConfiguration['options'] = {};
+
+  private getChartOptions(): ChartConfiguration['options'] {
+    const isDark = this.themeService.isDarkMode();
+    const textColor = this.getCSSVariableValue('--muted-foreground');
+    const foregroundColor = this.getCSSVariableValue('--foreground');
+
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            padding: 15,
+            usePointStyle: true,
+            pointStyle: 'circle',
+            font: {
+              size: 13,
+              weight: 500
             },
-      tooltip: {
-        backgroundColor: 'hsl(0, 0%, 100%)',
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-        borderWidth: 1,
-        titleColor: 'hsl(0, 0%, 0%)',
-        bodyColor: 'hsl(0, 0%, 0%)',
-        padding: 12,
-        cornerRadius: 8,
-        displayColors: true,
-        boxPadding: 6,
-        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)'
-      } as any
-    },
-    scales: {
-      x: {
-        grid: {
-          color: 'rgba(0, 0, 0, 0.08)',
-          lineWidth: 1
+            color: foregroundColor
+          }
         },
-        ticks: {
-          color: 'hsl(var(--muted-foreground))',
-          font: { size: 12 }
-        },
-        border: {
-          display: false
-        }
+        tooltip: {
+          backgroundColor: isDark ? 'hsl(150, 15%, 12%)' : 'hsl(0, 0%, 100%)',
+          borderColor: isDark ? 'hsl(var(--border))' : 'rgba(0, 0, 0, 0.1)',
+          borderWidth: 1,
+          titleColor: isDark ? 'hsl(150, 10%, 95%)' : 'hsl(0, 0%, 0%)',
+          bodyColor: isDark ? 'hsl(150, 10%, 95%)' : 'hsl(0, 0%, 0%)',
+          padding: 12,
+          cornerRadius: 8,
+          displayColors: true,
+          boxPadding: 6,
+          boxShadow: isDark
+            ? '0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.3)'
+            : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)'
+        } as any
       },
-      y: {
-        grid: {
-          color: 'rgba(0, 0, 0, 0.08)',
-          lineWidth: 1
+      scales: {
+        x: {
+          grid: {
+            color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+            lineWidth: 1
+          },
+          ticks: {
+            color: textColor,
+            font: { size: 12 }
+          },
+          border: {
+            display: false
+          }
         },
-        ticks: {
-          color: 'hsl(var(--muted-foreground))',
-          font: { size: 12 },
-          callback: (value) => `${value} Mt`
-        },
-        border: {
-          display: false
+        y: {
+          grid: {
+            color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+            lineWidth: 1
+          },
+          ticks: {
+            color: textColor,
+            font: { size: 12 },
+            callback: (value) => `${value} Mt`
+          },
+          border: {
+            display: false
+          }
         }
       }
-    }
-  };
+    };
+  }
 
   public lineChartType: ChartType = 'line';
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private themeService: ThemeService
+  ) {
+    this.lineChartOptions = this.getChartOptions();
+
+    effect(() => {
+      this.themeService.currentTheme();
+      this.lineChartOptions = this.getChartOptions();
+      if (this.chart?.chart) {
+        this.chart.update();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.updateChartData();
@@ -121,6 +145,18 @@ export class EmissionsLineChartComponent implements OnInit, OnChanges {
         }
       }, 0);
     }
+  }
+
+  private getCSSVariableValue(variable: string): string {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return '#000000';
+    }
+    const root = document.documentElement;
+    const value = getComputedStyle(root).getPropertyValue(variable).trim();
+    if (value && !value.startsWith('hsl')) {
+      return `hsl(${value})`;
+    }
+    return value || '#000000';
   }
 
   private updateChartData(): void {

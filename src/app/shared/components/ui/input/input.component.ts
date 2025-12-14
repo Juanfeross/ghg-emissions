@@ -15,6 +15,12 @@ export class InputComponent {
   @Input() className: string = '';
   @Input() min: number | null = null;
   @Input() max: number | null = null;
+  @Input() id?: string;
+  @Input() ariaLabel?: string;
+  @Input() ariaDescribedBy?: string;
+  @Input() required = false;
+  @Input() disabled = false;
+  @Input() readonly = false;
   @Output() valueChange = new EventEmitter<string | number>();
   @Output() inputChange = new EventEmitter<Event>();
 

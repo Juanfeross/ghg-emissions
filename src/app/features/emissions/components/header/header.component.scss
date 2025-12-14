@@ -6,7 +6,15 @@
   &__content {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
     gap: 0.75rem;
+    flex: 1;
   }
 
   &__icon {
@@ -23,6 +31,38 @@
 
   &__text {
     flex: 1;
+  }
+
+  &__theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid hsl(var(--border));
+    background-color: hsl(var(--card));
+    color: hsl(var(--foreground));
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    flex-shrink: 0;
+
+    &:hover {
+      background-color: hsl(var(--muted));
+      border-color: hsl(var(--ring));
+    }
+
+    &:focus {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: 2px;
+    }
+  }
+
+  &__theme-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.2s ease;
   }
 
   &__title {

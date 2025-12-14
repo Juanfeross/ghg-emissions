@@ -1,0 +1,23 @@
+<div class="empty-state" role="status" aria-live="polite">
+  <div *ngIf="icon" class="empty-state__icon" aria-hidden="true">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        [attr.d]="icon"
+      ></path>
+    </svg>
+  </div>
+  <h3 class="empty-state__title">{{ title }}</h3>
+  <p *ngIf="message" class="empty-state__message">{{ message }}</p>
+  <button
+    *ngIf="actionLabel && actionClick"
+    type="button"
+    class="empty-state__action"
+    (click)="actionClick()"
+  >
+    {{ actionLabel }}
+  </button>
+</div>
+

@@ -4,8 +4,13 @@
     <button
       type="button"
       (click)="toggle($event)"
+      (keydown)="handleTriggerKeyDown($event)"
       class="multi-select__trigger"
       [class.multi-select__trigger--active]="isOpen"
+      [attr.aria-expanded]="isOpen"
+      [attr.aria-haspopup]="'listbox'"
+      [attr.aria-controls]="isOpen ? 'multi-select-options' : null"
+      [attr.aria-label]="label || 'Select options'"
     >
       <div class="multi-select__value">
         <span *ngIf="selectedValues.length === 0" class="multi-select__placeholder">{{ placeholder }}</span>
@@ -34,7 +39,14 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
       </svg>
     </button>
-    <div *ngIf="isOpen" class="multi-select__dropdown" (click)="$event.stopPropagation()">
+    <div
+      *ngIf="isOpen"
+      id="multi-select-options"
+      class="multi-select__dropdown"
+      role="listbox"
+      (click)="$event.stopPropagation()"
+      #optionsContainer
+    >
       <div class="multi-select__search">
         <input
           type="text"
@@ -44,6 +56,9 @@
           class="multi-select__search-input"
           (click)="$event.stopPropagation()"
           (focus)="$event.stopPropagation()"
+          (keydown)="handleSearchKeyDown($event)"
+          aria-label="Search options"
+          #searchInput
         />
       </div>
       <div class="multi-select__actions" *ngIf="filteredOptions.length > 0">
@@ -56,10 +71,15 @@
       </div>
       <div class="multi-select__options">
         <div
-          *ngFor="let option of filteredOptions"
+          *ngFor="let option of filteredOptions; let i = index"
           (click)="toggleOption(option); $event.stopPropagation()"
+          (keydown)="handleOptionKeyDown($event, option, i)"
           class="multi-select__option"
           [class.multi-select__option--selected]="isSelected(option)"
+          [class.multi-select__option--focused]="isFocused(i)"
+          role="option"
+          [attr.aria-selected]="isSelected(option)"
+          [attr.tabindex]="isFocused(i) ? 0 : -1"
         >
           <div class="multi-select__checkbox">
             <svg *ngIf="isSelected(option)" fill="none" stroke="currentColor" viewBox="0 0 24 24">

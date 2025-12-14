@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Emission } from '../../../../core/models';
 import { BadgeComponent } from '../../../../shared/components/ui/badge/badge.component';
 import { InputComponent } from '../../../../shared/components/ui/input/input.component';
+import { EmptyStateComponent } from '../../../../shared/components/ui/empty-state/empty-state.component';
 
 function getEmissionTypeBadgeVariant(type: string): string {
   switch (type) {
@@ -36,7 +37,8 @@ interface TableFilters {
     CommonModule,
     FormsModule,
     BadgeComponent,
-    InputComponent
+    InputComponent,
+    EmptyStateComponent
   ],
   templateUrl: './emissions-table.component.html',
   styleUrl: './emissions-table.component.scss'

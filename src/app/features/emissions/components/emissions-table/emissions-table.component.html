@@ -114,7 +114,7 @@
   </div>
 
   <div class="table-card__content">
-    <table class="emissions-table">
+    <table class="emissions-table" role="table" aria-label="Emissions data table">
       <thead>
         <tr class="emissions-table__header-row">
           <th>
@@ -122,6 +122,10 @@
               type="button"
               (click)="setSortBy('year')"
               class="emissions-table__sort-button"
+              [attr.aria-label]="tableFilters.sortBy === 'year' ? 'Year column, sorted ' + tableFilters.sortOrder : 'Sort by year'"
+              [attr.aria-sort]="tableFilters.sortBy === 'year' ? (tableFilters.sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'"
+              (keydown.enter)="setSortBy('year')"
+              (keydown.space)="setSortBy('year'); $event.preventDefault()"
             >
               Year
               <svg
@@ -141,6 +145,10 @@
               type="button"
               (click)="setSortBy('country')"
               class="emissions-table__sort-button"
+              [attr.aria-label]="tableFilters.sortBy === 'country' ? 'Country column, sorted ' + tableFilters.sortOrder : 'Sort by country'"
+              [attr.aria-sort]="tableFilters.sortBy === 'country' ? (tableFilters.sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'"
+              (keydown.enter)="setSortBy('country')"
+              (keydown.space)="setSortBy('country'); $event.preventDefault()"
             >
               Country
               <svg
@@ -160,6 +168,10 @@
               type="button"
               (click)="setSortBy('activity')"
               class="emissions-table__sort-button"
+              [attr.aria-label]="tableFilters.sortBy === 'activity' ? 'Activity column, sorted ' + tableFilters.sortOrder : 'Sort by activity'"
+              [attr.aria-sort]="tableFilters.sortBy === 'activity' ? (tableFilters.sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'"
+              (keydown.enter)="setSortBy('activity')"
+              (keydown.space)="setSortBy('activity'); $event.preventDefault()"
             >
               Activity
               <svg
@@ -179,6 +191,10 @@
               type="button"
               (click)="setSortBy('type')"
               class="emissions-table__sort-button"
+              [attr.aria-label]="tableFilters.sortBy === 'type' ? 'Type column, sorted ' + tableFilters.sortOrder : 'Sort by type'"
+              [attr.aria-sort]="tableFilters.sortBy === 'type' ? (tableFilters.sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'"
+              (keydown.enter)="setSortBy('type')"
+              (keydown.space)="setSortBy('type'); $event.preventDefault()"
             >
               Type
               <svg
@@ -198,6 +214,10 @@
               type="button"
               (click)="setSortBy('emissions')"
               class="emissions-table__sort-button emissions-table__sort-button--right"
+              [attr.aria-label]="tableFilters.sortBy === 'emissions' ? 'Emissions column, sorted ' + tableFilters.sortOrder : 'Sort by emissions'"
+              [attr.aria-sort]="tableFilters.sortBy === 'emissions' ? (tableFilters.sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'"
+              (keydown.enter)="setSortBy('emissions')"
+              (keydown.space)="setSortBy('emissions'); $event.preventDefault()"
             >
               Emissions (Mt)
               <svg
@@ -215,22 +235,31 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of paginatedData; let i = index" class="emissions-table__body-row">
-          <td class="font-medium">{{ item.year }}</td>
-          <td>{{ item.country }}</td>
-          <td>{{ item.activity }}</td>
-          <td>
+        <tr
+          *ngFor="let item of paginatedData; let i = index"
+          class="emissions-table__body-row"
+          role="row"
+          [attr.aria-rowindex]="i + 1"
+        >
+          <td class="font-medium" role="gridcell">{{ item.year }}</td>
+          <td role="gridcell">{{ item.country }}</td>
+          <td role="gridcell">{{ item.activity }}</td>
+          <td role="gridcell">
             <app-badge variant="outline" [className]="getEmissionTypeBadgeClass(item.emission_type)">
               {{ item.emission_type }}
             </app-badge>
           </td>
-          <td class="text-right font-mono font-medium">
+          <td class="text-right font-mono font-medium" role="gridcell">
             {{ item.emissions.toFixed(2) }}
           </td>
         </tr>
-        <tr *ngIf="paginatedData.length === 0" class="emissions-table__empty-row">
-          <td colspan="5" class="emissions-table__empty-cell">
-            No data found
+        <tr *ngIf="paginatedData.length === 0" class="emissions-table__empty-row" role="row">
+          <td colspan="5" class="emissions-table__empty-cell" role="gridcell">
+            <app-empty-state
+              title="No data found"
+              message="Try adjusting your filters to see more results."
+              icon="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            ></app-empty-state>
           </td>
         </tr>
       </tbody>

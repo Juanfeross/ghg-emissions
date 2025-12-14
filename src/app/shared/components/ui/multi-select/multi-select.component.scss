@@ -133,6 +133,8 @@
     padding: 0 0.5rem;
     border: 1px solid hsl(var(--input));
     border-radius: 0.25rem;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-size: 0.875rem;
     outline: none;
     transition: all 0.2s;
@@ -141,6 +143,10 @@
       border-color: hsl(var(--ring));
       outline: 2px solid hsl(var(--ring));
       outline-offset: 0;
+    }
+
+    &::placeholder {
+      color: hsl(var(--muted-foreground));
     }
   }
 
@@ -182,14 +188,26 @@
     border-radius: 0.25rem;
     cursor: pointer;
     transition: background-color 0.2s;
+    outline: none;
 
-    &:hover {
+    &:hover,
+    &--focused {
       background-color: hsl(var(--accent));
       color: hsl(var(--accent-foreground));
     }
 
+    &:focus-visible {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: -2px;
+    }
+
     &--selected {
       background-color: hsl(var(--primary) / 0.1);
+      
+      &:hover,
+      &.multi-select__option--focused {
+        background-color: hsl(var(--primary) / 0.15);
+      }
     }
   }
 

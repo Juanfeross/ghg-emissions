@@ -21,6 +21,9 @@ export class MultiSelectComponent implements OnInit {
   isOpen = false;
   searchQuery: string = '';
   filteredOptions: string[] = [];
+  private focusedOptionIndex: number = -1;
+  @ViewChild('searchInput') searchInputRef?: ElementRef<HTMLInputElement>;
+  @ViewChild('optionsContainer') optionsContainerRef?: ElementRef<HTMLDivElement>;
 
   ngOnInit(): void {
     this.filteredOptions = [...this.options];
@@ -33,12 +36,29 @@ export class MultiSelectComponent implements OnInit {
     }
   }
 
-  toggle(event: MouseEvent): void {
+  toggle(event: MouseEvent | KeyboardEvent): void {
     event.stopPropagation();
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
       this.searchQuery = '';
       this.updateFilteredOptions();
+      this.focusedOptionIndex = -1;
+      setTimeout(() => {
+        if (this.searchInputRef?.nativeElement) {
+          this.searchInputRef.nativeElement.focus();
+        }
+      }, 0);
+    }
+  }
+
+  handleTriggerKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (!this.isOpen) {
+        this.toggle(event);
+      }
+    } else if (event.key === 'Escape' && this.isOpen) {
+      this.close();
     }
   }
 
@@ -50,6 +70,79 @@ export class MultiSelectComponent implements OnInit {
 
   onSearchInput(): void {
     this.updateFilteredOptions();
+    this.focusedOptionIndex = -1;
+  }
+
+  focusFirstOption(): void {
+    if (this.filteredOptions.length > 0) {
+      this.focusedOptionIndex = 0;
+      this.scrollToOption(0);
+    }
+  }
+
+  handleOptionKeyDown(event: KeyboardEvent, option: string, index: number): void {
+    switch (event.key) {
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        this.toggleOption(option);
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        if (index < this.filteredOptions.length - 1) {
+          this.focusedOptionIndex = index + 1;
+          this.scrollToOption(this.focusedOptionIndex);
+        }
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        if (index > 0) {
+          this.focusedOptionIndex = index - 1;
+          this.scrollToOption(this.focusedOptionIndex);
+        } else {
+          this.focusedOptionIndex = -1;
+          if (this.searchInputRef?.nativeElement) {
+            this.searchInputRef.nativeElement.focus();
+          }
+        }
+        break;
+      case 'Home':
+        event.preventDefault();
+        this.focusedOptionIndex = 0;
+        this.scrollToOption(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        this.focusedOptionIndex = this.filteredOptions.length - 1;
+        this.scrollToOption(this.focusedOptionIndex);
+        break;
+    }
+  }
+
+  handleSearchKeyDown(event: KeyboardEvent): void {
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        this.focusFirstOption();
+        break;
+      case 'Escape':
+        event.preventDefault();
+        this.close();
+        break;
+    }
+  }
+
+  private scrollToOption(index: number): void {
+    setTimeout(() => {
+      const optionElements = this.optionsContainerRef?.nativeElement?.querySelectorAll('.multi-select__option');
+      if (optionElements && optionElements[index]) {
+        (optionElements[index] as HTMLElement).focus();
+      }
+    }, 0);
+  }
+
+  isFocused(index: number): boolean {
+    return this.focusedOptionIndex === index;
   }
 
   updateFilteredOptions(): void {

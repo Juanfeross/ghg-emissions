@@ -14,6 +14,8 @@ export class ButtonComponent {
   @Input() size: 'default' | 'sm' | 'lg' | 'icon' = 'default';
   @Input() className = '';
   @Input() disabled = false;
+  @Input() type: 'button' | 'submit' | 'reset' = 'button';
+  @Input() ariaLabel?: string;
 
   get buttonClasses(): string {
     return cn(

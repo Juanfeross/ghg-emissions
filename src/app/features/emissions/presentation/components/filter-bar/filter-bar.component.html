@@ -1,7 +1,7 @@
 <div class="filter-bar" [style.animation-delay]="'100ms'">
   <div class="filter-bar__header">
     <div class="filter-bar__title">
-      <svg class="filter-bar__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="filter-bar__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
       </svg>
       <span class="filter-bar__text">Filters</span>
@@ -15,8 +15,9 @@
       size="sm"
       (click)="clearFilters()"
       className="filter-bar__clear"
+      [ariaLabel]="'Clear all filters'"
     >
-      <svg class="filter-bar__clear-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="filter-bar__clear-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
       </svg>
       Clear All
@@ -111,7 +112,13 @@
     </div>
   </div>
 
-  <button type="button" class="filter-bar__toggle" (click)="toggleExpand()">
+  <button
+    type="button"
+    class="filter-bar__toggle"
+    (click)="toggleExpand()"
+    [attr.aria-label]="isExpanded ? 'Show less filters' : 'Show more filters'"
+    [attr.aria-expanded]="isExpanded"
+  >
     <span>{{ isExpanded ? 'Show Less' : 'Show More' }}</span>
     <svg
       class="filter-bar__toggle-icon"
@@ -119,6 +126,7 @@
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
+      aria-hidden="true"
     >
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
     </svg>
@@ -127,75 +135,111 @@
   <div *ngIf="hasActiveFilters" class="filter-bar__active-filters">
     <div *ngFor="let country of filters.countries" class="filter-bar__chip">
       <span>Country: {{ country }}</span>
-      <svg
+      <button
+        type="button"
         (click)="removeCountryFilter(country)"
         class="filter-bar__chip-remove"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
+        [attr.aria-label]="'Remove country filter ' + country"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+        <svg
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
     <div *ngFor="let type of filters.emissionTypes" class="filter-bar__chip">
       <span>Type: {{ type }}</span>
-      <svg
+      <button
+        type="button"
         (click)="removeTypeFilter(type)"
         class="filter-bar__chip-remove"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
+        [attr.aria-label]="'Remove type filter ' + type"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+        <svg
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
     <div *ngFor="let activity of filters.activities" class="filter-bar__chip">
       <span>Activity: {{ activity }}</span>
-      <svg
+      <button
+        type="button"
         (click)="removeActivityFilter(activity)"
         class="filter-bar__chip-remove"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
+        [attr.aria-label]="'Remove activity filter ' + activity"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+        <svg
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
     <div *ngIf="filters.yearRange" class="filter-bar__chip">
       <span>Years: {{ filters.yearRange[0] }} - {{ filters.yearRange[1] }}</span>
-      <svg
+      <button
+        type="button"
         (click)="removeYearFilter()"
         class="filter-bar__chip-remove"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
+        aria-label="Remove year range filter"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+        <svg
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
     <div *ngIf="filters.minEmissions !== null" class="filter-bar__chip">
       <span>Min Emissions: {{ filters.minEmissions }} Mt</span>
-      <svg
+      <button
+        type="button"
         (click)="removeMinEmissionsFilter()"
         class="filter-bar__chip-remove"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
+        aria-label="Remove minimum emissions filter"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+        <svg
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
     <div *ngIf="filters.maxEmissions !== null" class="filter-bar__chip">
       <span>Max Emissions: {{ filters.maxEmissions }} Mt</span>
-      <svg
+      <button
+        type="button"
         (click)="removeMaxEmissionsFilter()"
         class="filter-bar__chip-remove"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
+        aria-label="Remove maximum emissions filter"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+        <svg
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
   </div>
 </div>

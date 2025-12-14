@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable, signal, computed, WritableSignal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { catchError, of } from 'rxjs';
 import { Emission, EmissionType } from '../domain/models/emission.model';
 import { FilterState, AggregatedData } from '../domain/models/filter.model';
 import { applyFilters } from '../domain/utils/emission-filter.util';
@@ -11,8 +11,8 @@ import { EmissionsRepository } from '../data/emissions.repository';
   providedIn: 'root'
 })
 export class EmissionsStore {
-  private dataSubject = new BehaviorSubject<Emission[]>([]);
-  private filtersSubject = new BehaviorSubject<FilterState>({
+  private dataSignal: WritableSignal<Emission[]>;
+  private filtersSignal = signal<FilterState>({
     countries: [],
     emissionTypes: [],
     activities: [],
@@ -21,70 +21,62 @@ export class EmissionsStore {
     maxEmissions: null,
   });
 
-  data$ = this.dataSubject.asObservable();
-  filters$ = this.filtersSubject.asObservable();
+  data = computed(() => this.dataSignal());
+  filters = computed(() => this.filtersSignal());
 
   constructor(private repository: EmissionsRepository) {
-    this.repository.getAll().subscribe({
-      next: (data) => {
-        this.dataSubject.next(data);
-      },
-      error: (error) => {
-        console.error('Error loading emissions data:', error);
-        this.dataSubject.next([]);
-      }
-    });
+    this.dataSignal = toSignal(
+      this.repository.getAll().pipe(
+        catchError((error) => {
+          console.error('Error loading emissions data:', error);
+          return of([]);
+        })
+      ),
+      { initialValue: [] }
+    ) as WritableSignal<Emission[]>;
   }
 
   setFilters(filters: FilterState): void {
-    this.filtersSubject.next(filters);
+    this.filtersSignal.set(filters);
   }
 
-  get filteredData$(): Observable<Emission[]> {
-    return combineLatest([this.data$, this.filters$]).pipe(
-      map(([data, filters]) => {
-        if (!data || data.length === 0) {
-          return [];
-        }
-        return applyFilters(data, filters);
-      })
-    );
-  }
+  filteredData = computed(() => {
+    const data = this.dataSignal();
+    const filters = this.filtersSignal();
+    if (!data || data.length === 0) {
+      return [];
+    }
+    return applyFilters(data, filters);
+  });
 
-  get aggregatedData$(): Observable<AggregatedData> {
-    return this.filteredData$.pipe(
-      map(filteredData => aggregateData(filteredData))
-    );
-  }
+  aggregatedData = computed(() => {
+    const filtered = this.filteredData();
+    return aggregateData(filtered);
+  });
 
-  get uniqueCountries$(): Observable<string[]> {
-    return this.data$.pipe(
-      map(data => extractUniqueValues(data).countries)
-    );
-  }
+  uniqueCountries = computed(() => {
+    const data = this.dataSignal();
+    return extractUniqueValues(data).countries;
+  });
 
-  get uniqueActivities$(): Observable<string[]> {
-    return this.data$.pipe(
-      map(data => extractUniqueValues(data).activities)
-    );
-  }
+  uniqueActivities = computed(() => {
+    const data = this.dataSignal();
+    return extractUniqueValues(data).activities;
+  });
 
-  get uniqueEmissionTypes$(): Observable<EmissionType[]> {
-    return this.data$.pipe(
-      map(data => extractUniqueValues(data).emissionTypes as EmissionType[])
-    );
-  }
+  uniqueEmissionTypes = computed(() => {
+    const data = this.dataSignal();
+    return extractUniqueValues(data).emissionTypes as EmissionType[];
+  });
 
-  get yearRange$(): Observable<[number, number]> {
-    return this.data$.pipe(
-      map(data => extractUniqueValues(data).yearRange)
-    );
-  }
+  yearRange = computed(() => {
+    const data = this.dataSignal();
+    return extractUniqueValues(data).yearRange;
+  });
 
-  get emissionsRange$(): Observable<[number, number]> {
-    return this.data$.pipe(
-      map(data => extractUniqueValues(data).emissionsRange)
-    );
-  }
+  emissionsRange = computed(() => {
+    const data = this.dataSignal();
+    return extractUniqueValues(data).emissionsRange;
+  });
 }
 

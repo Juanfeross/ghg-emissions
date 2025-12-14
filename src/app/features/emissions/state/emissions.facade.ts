@@ -1,53 +1,30 @@
-import { Injectable } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Emission, EmissionType } from '../domain/models/emission.model';
-import { FilterState, AggregatedData } from '../domain/models/filter.model';
+import { Injectable, computed } from '@angular/core';
+import { EmissionType } from '../domain/models/emission.model';
+import { FilterState } from '../domain/models/filter.model';
 import { EmissionsStore } from './emissions.store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmissionsFacade {
-  constructor(private store: EmissionsStore) {}
+  readonly data;
+  readonly aggregatedData;
+  readonly filters;
+  readonly filterBarData;
 
-  get data$(): Observable<Emission[]> {
-    return this.store.filteredData$;
-  }
+  constructor(private store: EmissionsStore) {
+    this.data = this.store.filteredData;
+    this.aggregatedData = this.store.aggregatedData;
+    this.filters = this.store.filters;
 
-  get aggregatedData$(): Observable<AggregatedData> {
-    return this.store.aggregatedData$;
-  }
-
-  get filters$(): Observable<FilterState> {
-    return this.store.filters$;
-  }
-
-  get filterBarData$(): Observable<{
-    filters: FilterState;
-    countries: string[];
-    activities: string[];
-    emissionTypes: EmissionType[];
-    yearRange: [number, number];
-    emissionsRange: [number, number];
-  }> {
-    return combineLatest([
-      this.store.filters$,
-      this.store.uniqueCountries$,
-      this.store.uniqueActivities$,
-      this.store.uniqueEmissionTypes$,
-      this.store.yearRange$,
-      this.store.emissionsRange$
-    ]).pipe(
-      map(([filters, countries, activities, emissionTypes, yearRange, emissionsRange]) => ({
-        filters,
-        countries,
-        activities,
-        emissionTypes,
-        yearRange,
-        emissionsRange
-      }))
-    );
+    this.filterBarData = computed(() => ({
+      filters: this.store.filters(),
+      countries: this.store.uniqueCountries(),
+      activities: this.store.uniqueActivities(),
+      emissionTypes: this.store.uniqueEmissionTypes(),
+      yearRange: this.store.yearRange(),
+      emissionsRange: this.store.emissionsRange()
+    }));
   }
 
   setFilters(filters: FilterState): void {

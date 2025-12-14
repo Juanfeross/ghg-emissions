@@ -1,13 +1,14 @@
 <div class="table-card" [style.animation-delay]="'400ms'">
   <div class="table-card__header">
-    <h3 class="table-card__title">Detailed Emissions Data</h3>
+    <h3 id="table-heading" class="table-card__title">Detailed Emissions Data</h3>
     <button
       *ngIf="hasTableFilters"
       type="button"
       (click)="clearTableFilters()"
       class="table-card__clear-filters"
+      aria-label="Clear all table filters"
     >
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
       </svg>
       Clear Filters
@@ -99,7 +100,13 @@
       </div>
     </div>
 
-    <button type="button" class="table-filters__toggle" (click)="toggleFiltersExpand()">
+    <button
+      type="button"
+      class="table-filters__toggle"
+      (click)="toggleFiltersExpand()"
+      [attr.aria-label]="isFiltersExpanded ? 'Show less table filters' : 'Show more table filters'"
+      [attr.aria-expanded]="isFiltersExpanded"
+    >
       <span>{{ isFiltersExpanded ? 'Show Less' : 'Show More' }}</span>
       <svg
         class="table-filters__toggle-icon"
@@ -107,6 +114,7 @@
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
+        aria-hidden="true"
       >
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
       </svg>
@@ -114,7 +122,7 @@
   </div>
 
   <div class="table-card__content">
-    <table class="emissions-table" role="table" aria-label="Emissions data table">
+    <table class="emissions-table" aria-label="Emissions data table">
       <thead>
         <tr class="emissions-table__header-row">
           <th>
@@ -135,6 +143,7 @@
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
               </svg>
@@ -238,23 +247,22 @@
         <tr
           *ngFor="let item of paginatedData; let i = index"
           class="emissions-table__body-row"
-          role="row"
           [attr.aria-rowindex]="i + 1"
         >
-          <td class="font-medium" role="gridcell">{{ item.year }}</td>
-          <td role="gridcell">{{ item.country }}</td>
-          <td role="gridcell">{{ item.activity }}</td>
-          <td role="gridcell">
+          <td class="font-medium">{{ item.year }}</td>
+          <td>{{ item.country }}</td>
+          <td>{{ item.activity }}</td>
+          <td>
             <app-badge variant="outline" [className]="getEmissionTypeBadgeClass(item.emission_type)">
               {{ item.emission_type }}
             </app-badge>
           </td>
-          <td class="text-right font-mono font-medium" role="gridcell">
+          <td class="text-right font-mono font-medium">
             {{ item.emissions.toFixed(2) }}
           </td>
         </tr>
-        <tr *ngIf="paginatedData.length === 0" class="emissions-table__empty-row" role="row">
-          <td colspan="5" class="emissions-table__empty-cell" role="gridcell">
+        <tr *ngIf="paginatedData.length === 0" class="emissions-table__empty-row">
+          <td colspan="5" class="emissions-table__empty-cell">
             <app-empty-state
               title="No data found"
               message="Try adjusting your filters to see more results."
@@ -275,8 +283,9 @@
         (click)="previousPage()"
         [disabled]="currentPage === 1"
         type="button"
+        aria-label="Go to previous page"
       >
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
       </button>
@@ -288,6 +297,8 @@
           (click)="page !== null && goToPage(page)"
           [disabled]="page === null"
           type="button"
+          [attr.aria-label]="page !== null ? 'Go to page ' + page : null"
+          [attr.aria-current]="page === currentPage ? 'page' : null"
         >
           {{ page !== null ? page : '...' }}
         </button>
@@ -297,8 +308,9 @@
         (click)="nextPage()"
         [disabled]="currentPage === totalPages"
         type="button"
+        aria-label="Go to next page"
       >
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
       </button>

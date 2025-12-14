@@ -5,7 +5,7 @@
       <p class="stat-card__value">{{ displayValue }}</p>
       <p *ngIf="subtitle" class="stat-card__subtitle">{{ subtitle }}</p>
     </div>
-    <div class="stat-card__icon">
+    <div class="stat-card__icon" aria-hidden="true">
       <ng-content></ng-content>
     </div>
   </div>

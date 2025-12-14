@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
-import { Emission, AggregatedData, FilterState } from '../../../domain/models';
+import { FilterState } from '../../../domain/models';
 import { EmissionsFacade } from '../../../state/emissions.facade';
 import { MainLayoutComponent } from '../../../../../layouts/main-layout/main-layout.component';
 import { StatCardComponent } from '../../components/stat-card/stat-card.component';
@@ -26,14 +25,14 @@ import { EmissionsTableComponent } from '../../components/emissions-table/emissi
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
-  data$: Observable<Emission[]>;
-  aggregatedData$: Observable<AggregatedData>;
-  filterBarData$: Observable<any>;
+  readonly data;
+  readonly aggregatedData;
+  readonly filterBarData;
 
   constructor(private facade: EmissionsFacade) {
-    this.data$ = this.facade.data$;
-    this.aggregatedData$ = this.facade.aggregatedData$;
-    this.filterBarData$ = this.facade.filterBarData$;
+    this.data = this.facade.data;
+    this.aggregatedData = this.facade.aggregatedData;
+    this.filterBarData = this.facade.filterBarData;
   }
 
   ngOnInit(): void {}

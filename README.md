@@ -1,146 +1,156 @@
 # 🌍 GHG Emissions Dashboard
 
-Dashboard interactivo para monitorear y analizar emisiones anuales de gases de efecto invernadero (GHG) con visualizaciones en tiempo real, filtros avanzados y análisis detallado de datos.
-
-> **Nota:** Este proyecto es una **prueba técnica** desarrollada para **Anthesis**, demostrando habilidades en Angular, TypeScript, Clean Architecture, testing y Dockerización.
-
-**URL de Producción**: [https://ghg-emissions.vercel.app/emissions](https://ghg-emissions.vercel.app/emissions)
+Read this README in:
+- 🇬🇧 [English](README.md) (this file)
+- 🇪🇸 [Español](README.es.md)
 
 ---
 
-## 👤 Autor
+Interactive dashboard to monitor and analyze annual greenhouse gas (GHG) emissions with real-time visualizations, advanced filters, and detailed data analysis.
+
+> **Note:** This project is a **technical test** developed for **Anthesis**, demonstrating skills in Angular, TypeScript, Clean Architecture, testing, and Dockerization.
+
+**Production URL**: [https://ghg-emissions.vercel.app/emissions](https://ghg-emissions.vercel.app/emissions)
+
+---
+
+## 👤 Author
 
 **Juan Fernando Álvarez Gallego**
 
 - 📧 Email: [alvarezjfernandog@gmail.com](mailto:alvarezjfernandog@gmail.com)
-- 📱 Teléfono: +57 302 285 60 79
+- 📱 Phone: +57 302 285 60 79
 - 💼 LinkedIn: [Juan Fernando Álvarez Gallego](https://www.linkedin.com/in/juan-fernando-%C3%A1lvarez-gallego-b97b31212/)
 - 🌐 Portfolio: [GHG Emissions Dashboard](https://ghg-emissions.vercel.app/emissions)
 
 ---
 
-## 📋 Tabla de Contenidos
+## 📋 Table of Contents
 
-- [Características](#-características)
-- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [Arquitectura del Proyecto](#-arquitectura-del-proyecto)
-- [Principios y Metodologías](#-principios-y-metodologías)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Requisitos Previos](#-requisitos-previos)
-- [Instalación](#-instalación)
-- [Ejecución](#-ejecución)
+- [Features](#-features)
+- [Technologies Used](#-technologies-used)
+- [Project Architecture](#-project-architecture)
+- [Principles and Methodologies](#-principles-and-methodologies)
+- [Project Structure](#-project-structure)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Running the Application](#-running-the-application)
 - [Testing](#-testing)
-- [Dockerización](#-dockerización)
-- [Despliegue](#-despliegue)
-- [Scripts Disponibles](#-scripts-disponibles)
-- [Características Técnicas](#-características-técnicas)
+- [Dockerization](#-dockerization)
+- [Deployment](#-deployment)
+- [Available Scripts](#-available-scripts)
+- [Technical Features](#-technical-features)
+- [Additional Documentation](#-additional-documentation)
+- [Contact](#-contact)
+- [Changelog](#-changelog)
+- [Project Information](#-project-information)
 
 ---
 
-## ✨ Características
+## ✨ Features
 
-### Funcionalidades Principales
+### Main Functionalities
 
-- 📊 **Visualizaciones Interactivas**
-  - Gráfico de líneas: Evolución de emisiones por año
-  - Gráfico de barras: Emisiones por país
-  - Tarjetas de estadísticas: Total, promedio, máximo y cantidad de registros
+- 📊 **Interactive Visualizations**
+  - Line chart: Emissions evolution by year
+  - Bar chart: Emissions by country
+  - Statistics cards: Total, average, maximum, and record count
 
-- 🔍 **Sistema de Filtros Avanzado**
-  - Filtros por país (multi-selección)
-  - Filtros por tipo de emisión (CO2, CH4, N2O)
-  - Filtros por actividad económica
-  - Rangos de años y emisiones
-  - Búsqueda en tiempo real
-  - Chips de filtros activos
+- 🔍 **Advanced Filter System**
+  - Country filters (multi-select)
+  - Emission type filters (CO2, CH4, N2O)
+  - Economic activity filters
+  - Year and emissions ranges
+  - Real-time search
+  - Active filter chips
 
-- 📋 **Tabla Detallada**
-  - Paginación (10 items por página)
-  - Ordenamiento por columnas
-  - Filtros independientes de la tabla
-  - Búsqueda integrada
+- 📋 **Detailed Table**
+  - Pagination (10 items per page)
+  - Column sorting
+  - Independent table filters
+  - Integrated search
 
-- 🎨 **UI/UX Moderna**
-  - Diseño responsive
-  - Modo oscuro/claro
-  - Animaciones suaves
-  - Accesibilidad (WCAG 2.1)
-  - Navegación por teclado completa
+- 🎨 **Modern UI/UX**
+  - Responsive design
+  - Dark/light mode
+  - Smooth animations
+  - Accessibility (WCAG 2.1)
+  - Complete keyboard navigation
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Technologies Used
 
 ### Frontend Framework
-- **Angular 21** - Framework principal
-- **TypeScript 5.9** - Lenguaje de programación
-- **RxJS 7.8** - Programación reactiva
+- **Angular 21** - Main framework
+- **TypeScript 5.9** - Programming language
+- **RxJS 7.8** - Reactive programming
 
 ### State Management
-- **Angular Signals** - Gestión de estado reactivo (Angular 21)
+- **Angular Signals** - Reactive state management (Angular 21)
 
-### Visualización de Datos
-- **Chart.js 4.5** - Gráficos interactivos
-- **ng2-charts 8.0** - Wrapper de Chart.js para Angular
+### Data Visualization
+- **Chart.js 4.5** - Interactive charts
+- **ng2-charts 8.0** - Chart.js wrapper for Angular
 
 ### Testing
-- **Vitest 4.0** - Framework de testing
-- **Jasmine** - Framework de testing para componentes
+- **Vitest 4.0** - Testing framework
+- **Jasmine** - Testing framework for components
 - **Karma** - Test runner
 
-### Containerización
-- **Docker** - Containerización de la aplicación
-- **Docker Compose** - Orquestación de servicios
-- **Nginx Alpine** - Servidor web para producción
+### Containerization
+- **Docker** - Application containerization
+- **Docker Compose** - Service orchestration
+- **Nginx Alpine** - Web server for production
 
-### Despliegue
-- **Vercel** - Plataforma de despliegue
+### Deployment
+- **Vercel** - Deployment platform
 
-### Herramientas de Desarrollo
-- **Node.js 20+** - Entorno de ejecución
-- **npm** - Gestor de paquetes
-- **SCSS** - Preprocesador CSS
+### Development Tools
+- **Node.js 20+** - Runtime environment
+- **npm** - Package manager
+- **SCSS** - CSS preprocessor
 
 ---
 
-## 🏗️ Arquitectura del Proyecto
+## 🏗️ Project Architecture
 
-El proyecto sigue los principios de **Clean Architecture** y **SOLID**, organizando el código en capas bien definidas:
+The project follows **Clean Architecture** and **SOLID** principles, organizing code into well-defined layers:
 
-### Estructura por Capas
+### Layer Structure
 
 ```
 src/app/
-├── core/                    # Núcleo de la aplicación
-│   ├── services/           # Servicios transversales (Theme, Toast)
-│   ├── tokens/             # Tokens de inyección
-│   └── utils/              # Utilidades core
+├── core/                    # Application core
+│   ├── services/           # Transversal services (Theme, Toast)
+│   ├── tokens/             # Injection tokens
+│   └── utils/              # Core utilities
 │
-├── features/               # Módulos de características
-│   └── emissions/          # Feature: Emisiones
-│       ├── data/           # Capa de Datos
+├── features/               # Feature modules
+│   └── emissions/          # Feature: Emissions
+│       ├── data/           # Data Layer
 │       │   ├── emissions.datasource.ts
 │       │   └── emissions.repository.ts
-│       ├── domain/         # Capa de Dominio
-│       │   ├── models/     # Entidades y modelos
-│       │   └── utils/      # Funciones puras del dominio
-│       ├── state/          # Capa de Estado
+│       ├── domain/         # Domain Layer
+│       │   ├── models/     # Entities and models
+│       │   └── utils/      # Pure domain functions
+│       ├── state/          # State Layer
 │       │   ├── emissions.store.ts
 │       │   └── emissions.facade.ts
-│       └── presentation/   # Capa de Presentación
-│           ├── components/ # Componentes UI
-│           └── pages/      # Páginas/rutas
+│       └── presentation/   # Presentation Layer
+│           ├── components/ # UI components
+│           └── pages/      # Pages/routes
 │
-├── shared/                 # Recursos compartidos
-│   ├── chart/             # Servicios de gráficos
-│   ├── ui/                # Componentes UI reutilizables
-│   └── utils/             # Utilidades compartidas
+├── shared/                 # Shared resources
+│   ├── chart/             # Chart services
+│   ├── ui/                # Reusable UI components
+│   └── utils/             # Shared utilities
 │
-└── layouts/               # Layouts de la aplicación
-    └── main-layout/       # Layout principal (Header + Footer)
+└── layouts/               # Application layouts
+    └── main-layout/       # Main layout (Header + Footer)
 ```
 
-### Flujo de Datos
+### Data Flow
 
 ```
 Data Layer (Repository)
@@ -154,146 +164,143 @@ Presentation Layer (Components)
 UI (Templates)
 ```
 
-### Separación de Responsabilidades
+### Separation of Concerns
 
-1. **Domain Layer**: Contiene la lógica de negocio pura (funciones puras)
-2. **Data Layer**: Maneja el acceso a datos (API, localStorage)
-3. **State Layer**: Gestiona el estado reactivo con Signals
-4. **Presentation Layer**: Componentes y UI
+1. **Domain Layer**: Contains pure business logic (pure functions)
+2. **Data Layer**: Handles data access (API, localStorage)
+3. **State Layer**: Manages reactive state with Signals
+4. **Presentation Layer**: Components and UI
 
 ---
 
-## 📐 Principios y Metodologías
+## 📐 Principles and Methodologies
 
 ### Clean Code
-- ✅ Nombres descriptivos y semánticos
-- ✅ Funciones pequeñas y con responsabilidad única
-- ✅ Código auto-documentado
-- ✅ Eliminación de duplicación (DRY)
-- ✅ Comentarios solo cuando son necesarios
+- ✅ Descriptive and semantic names
+- ✅ Small functions with single responsibility
+- ✅ Self-documenting code
+- ✅ Elimination of duplication (DRY)
+- ✅ Comments only when necessary
 
 ### SOLID
-- ✅ **S**ingle Responsibility Principle: Cada clase/componente tiene una sola razón para cambiar
-- ✅ **O**pen/Closed Principle: Extensible sin modificar código existente
-- ✅ **L**iskov Substitution Principle: Interfaces bien definidas
-- ✅ **I**nterface Segregation: Interfaces específicas y pequeñas
-- ✅ **D**ependency Inversion: Dependencias a través de abstracciones
+- ✅ **S**ingle Responsibility Principle: Each class/component has a single reason to change
+- ✅ **O**pen/Closed Principle: Extensible without modifying existing code
+- ✅ **L**iskov Substitution Principle: Well-defined interfaces
+- ✅ **I**nterface Segregation: Specific and small interfaces
+- ✅ **D**ependency Inversion: Dependencies through abstractions
 
 ### Clean Architecture
-- ✅ Separación en capas (Domain, Data, State, Presentation)
-- ✅ Dependencias apuntan hacia adentro (hacia el dominio)
-- ✅ Lógica de negocio independiente del framework
-- ✅ Testabilidad mejorada
+- ✅ Separation into layers (Domain, Data, State, Presentation)
+- ✅ Dependencies point inward (toward the domain)
+- ✅ Business logic independent of the framework
+- ✅ Improved testability
 
-### Patrones de Diseño
-- ✅ **Repository Pattern**: Abstracción del acceso a datos
-- ✅ **Facade Pattern**: Simplifica la interacción con el store
-- ✅ **Observer Pattern**: Signals y reactive programming
-- ✅ **Strategy Pattern**: Utilidades configurables
+### Design Patterns
+- ✅ **Repository Pattern**: Data access abstraction
+- ✅ **Facade Pattern**: Simplifies interaction with the store
+- ✅ **Observer Pattern**: Signals and reactive programming
+- ✅ **Strategy Pattern**: Configurable utilities
 
-### Buenas Prácticas Angular
+### Angular Best Practices
 - ✅ Standalone Components
-- ✅ Signals para estado reactivo
-- ✅ Lazy Loading de rutas
-- ✅ Change Detection optimizado
-- ✅ OnPush change detection strategy (donde aplica)
+- ✅ Signals for reactive state
+- ✅ Lazy Loading of routes
+- ✅ Optimized change detection
+- ✅ OnPush change detection strategy (where applicable)
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 ghg-emissions/
 ├── src/
 │   ├── app/
-│   │   ├── core/                   # Servicios y utilidades core
-│   │   ├── features/               # Features del negocio
-│   │   ├── layouts/                # Layouts de la aplicación
-│   │   └── shared/                 # Recursos compartidos
-│   ├── assets/                     # Assets estáticos
-│   └── index.html                  # HTML principal
+│   │   ├── core/                   # Core services and utilities
+│   │   ├── features/               # Business features
+│   │   ├── layouts/                # Application layouts
+│   │   └── shared/                 # Shared resources
+│   ├── assets/                     # Static assets
+│   │   └── data/
+│   │       └── emissions.json      # Emissions data
+│   └── index.html                  # Main HTML
 │
-├── public/                         # Archivos públicos
-│   └── assets/
-│       └── data/
-│           └── emissions.json      # Datos de emisiones
-│
-├── Dockerfile                      # Configuración Docker
-├── docker-compose.yml              # Orquestación Docker
-├── nginx.conf                      # Configuración Nginx
-├── .dockerignore                   # Archivos excluidos de Docker
-├── angular.json                    # Configuración Angular
-├── package.json                    # Dependencias y scripts
-└── tsconfig.json                   # Configuración TypeScript
+├── Dockerfile                      # Docker configuration
+├── docker-compose.yml              # Docker orchestration
+├── nginx.conf                      # Nginx configuration
+├── .dockerignore                   # Files excluded from Docker
+├── angular.json                    # Angular configuration
+├── package.json                    # Dependencies and scripts
+└── tsconfig.json                   # TypeScript configuration
 ```
 
 ---
 
-## 📋 Requisitos Previos
+## 📋 Prerequisites
 
-Antes de comenzar, asegúrate de tener instalado:
+Before starting, make sure you have installed:
 
-- **Node.js** 20.x o superior ([Descargar](https://nodejs.org/))
-- **npm** 10.x o superior (viene con Node.js)
-- **Angular CLI** 21.x o superior
-- **Docker Desktop** (opcional, para containerización)
-- **Git** (para clonar el repositorio)
+- **Node.js** 20.x or higher ([Download](https://nodejs.org/))
+- **npm** 10.x or higher (comes with Node.js)
+- **Angular CLI** 21.x or higher
+- **Docker Desktop** (optional, for containerization)
+- **Git** (to clone the repository)
 
-### Verificar Instalación
+### Verify Installation
 
 ```bash
-node --version    # Debe ser v20.x o superior
-npm --version     # Debe ser v10.x o superior
-ng version        # Debe ser 21.x o superior
-docker --version  # Opcional
+node --version    # Must be v20.x or higher
+npm --version     # Must be v10.x or higher
+ng version        # Must be 21.x or higher
+docker --version  # Optional
 ```
 
 ---
 
-## 🚀 Instalación
+## 🚀 Installation
 
-### 1. Clonar el Repositorio
+### 1. Clone the Repository
 
 ```bash
 git clone <repository-url>
 cd ghg-emissions
 ```
 
-### 2. Instalar Dependencias
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-Esto instalará todas las dependencias necesarias definidas en `package.json`.
+This will install all necessary dependencies defined in `package.json`.
 
 ---
 
-## ▶️ Ejecución
+## ▶️ Running the Application
 
-### Modo Desarrollo
+### Development Mode
 
-Para ejecutar la aplicación en modo desarrollo con hot-reload:
+To run the application in development mode with hot-reload:
 
 ```bash
 npm start
-# o
+# or
 ng serve
 ```
 
-La aplicación estará disponible en: **http://localhost:4200**
+The application will be available at: **http://localhost:4200**
 
-### Modo Producción (Build Local)
+### Production Mode (Local Build)
 
-Para construir la aplicación para producción:
+To build the application for production:
 
 ```bash
 npm run build
 ```
 
-Los archivos optimizados se generarán en `dist/ghg-emissions/browser/`
+Optimized files will be generated in `dist/ghg-emissions/browser/`
 
-### Servir Build de Producción Localmente
+### Serve Production Build Locally
 
 ```bash
 npx http-server dist/ghg-emissions/browser -p 4200
@@ -303,157 +310,157 @@ npx http-server dist/ghg-emissions/browser -p 4200
 
 ## 🧪 Testing
 
-El proyecto incluye tests unitarios completos para la lógica de negocio crítica.
+The project includes comprehensive unit tests for critical business logic.
 
-### Ejecutar Todos los Tests
+### Run All Tests
 
-#### Con Karma/Jasmine (Angular)
+#### With Karma/Jasmine (Angular)
 
 ```bash
 npm run test:ng
 ```
 
-#### Con Vitest
+#### With Vitest
 
 ```bash
 npm test
 ```
 
-### Modo Watch (Desarrollo)
+### Watch Mode (Development)
 
 ```bash
 npm run test:watch
 ```
 
-### Ejecutar Tests Específicos
+### Run Specific Tests
 
 ```bash
-# Ejecutar tests de utilidades
+# Run utility tests
 npm test -- src/app/features/emissions/domain/utils/
 ```
 
-### Cobertura de Tests
+### Test Coverage
 
-**48 tests unitarios** cubriendo:
-- ✅ Filtrado de emisiones (12 tests)
-- ✅ Agregación de datos (13 tests)
-- ✅ Procesamiento de tablas (21 tests)
-- ✅ Utilidades adicionales (2 tests)
+**48 unit tests** covering:
+- ✅ Emission filtering (12 tests)
+- ✅ Data aggregation (13 tests)
+- ✅ Table processing (21 tests)
+- ✅ Additional utilities (2 tests)
 
-**Cobertura: 100% de la lógica de negocio crítica**
+**Coverage: 100% of critical business logic**
 
 ---
 
-## 🐳 Dockerización
+## 🐳 Dockerization
 
-El proyecto está completamente dockerizado usando un **multi-stage build** para optimizar el tamaño de la imagen final.
+The project is fully dockerized using a **multi-stage build** to optimize the final image size.
 
-### Requisitos
+### Requirements
 
-- Docker Desktop instalado y ejecutándose
-- Docker Compose instalado
+- Docker Desktop installed and running
+- Docker Compose installed
 
-### Opción 1: Docker Compose (Recomendado)
+### Option 1: Docker Compose (Recommended)
 
 ```bash
-# Construir y ejecutar
+# Build and run
 docker-compose up -d --build
 
-# Ver logs
+# View logs
 docker-compose logs -f
 
-# Detener
+# Stop
 docker-compose down
 ```
 
-La aplicación estará disponible en: **http://localhost**
+The application will be available at: **http://localhost**
 
-### Opción 2: Scripts de Ayuda
+### Option 2: Helper Scripts
 
 #### Windows
 
 ```bash
-# Construir y ejecutar todo
+# Build and run everything
 docker-build.bat all
 
-# Solo construir
+# Build only
 docker-build.bat build
 
-# Solo ejecutar
+# Run only
 docker-build.bat run
 
-# Ver logs
+# View logs
 docker-build.bat logs
 
-# Detener
+# Stop
 docker-build.bat stop
 ```
 
 #### Linux/Mac
 
 ```bash
-# Construir y ejecutar todo
+# Build and run everything
 ./docker-build.sh all
 
-# Otros comandos similares
+# Other similar commands
 ./docker-build.sh build
 ./docker-build.sh run
 ./docker-build.sh logs
 ./docker-build.sh stop
 ```
 
-### Opción 3: Docker CLI Directo
+### Option 3: Direct Docker CLI
 
 ```bash
-# Construir la imagen
+# Build the image
 docker build -t ghg-emissions:latest .
 
-# Ejecutar el contenedor
+# Run the container
 docker run -d -p 80:80 --name ghg-emissions-app ghg-emissions:latest
 ```
 
-### Arquitectura Docker
+### Docker Architecture
 
 **Multi-Stage Build:**
-1. **Stage 1 (Build)**: `node:20-alpine` - Instala dependencias y construye la app
-2. **Stage 2 (Production)**: `nginx:alpine` - Sirve los archivos estáticos
+1. **Stage 1 (Build)**: `node:20-alpine` - Installs dependencies and builds the app
+2. **Stage 2 (Production)**: `nginx:alpine` - Serves static files
 
-**Tamaño de imagen final**: ~25-30 MB (optimizado)
+**Final image size**: ~25-30 MB (optimized)
 
 ### Health Check
 
 ```bash
 curl http://localhost/health
-# Debe responder: healthy
+# Should respond: healthy
 ```
 
-Para más detalles sobre Docker, consulta [GUIA_DOCKER.md](./GUIA_DOCKER.md)
+For more details on Docker, see [GUIA_DOCKER.md](./GUIA_DOCKER.md)
 
 ---
 
-## 🚢 Despliegue
+## 🚢 Deployment
 
-### Despliegue en Vercel
+### Deploy to Vercel
 
-El proyecto está desplegado en Vercel. Para desplegar:
+The project is deployed on Vercel. To deploy:
 
-1. **Instalar Vercel CLI** (opcional)
+1. **Install Vercel CLI** (optional)
 
 ```bash
 npm install -g vercel
 ```
 
-2. **Desplegar**
+2. **Deploy**
 
 ```bash
 vercel --prod
 ```
 
-O conecta tu repositorio a Vercel desde el dashboard.
+Or connect your repository to Vercel from the dashboard.
 
-**URL de Producción**: [https://ghg-emissions.vercel.app/emissions](https://ghg-emissions.vercel.app/emissions)
+**Production URL**: [https://ghg-emissions.vercel.app/emissions](https://ghg-emissions.vercel.app/emissions)
 
-### Despliegue con Docker
+### Deploy with Docker
 
 #### Docker Hub
 
@@ -462,158 +469,158 @@ O conecta tu repositorio a Vercel desde el dashboard.
 docker login
 
 # Tag
-docker tag ghg-emissions:latest tu-usuario/ghg-emissions:latest
+docker tag ghg-emissions:latest your-username/ghg-emissions:latest
 
 # Push
-docker push tu-usuario/ghg-emissions:latest
+docker push your-username/ghg-emissions:latest
 ```
 
-#### Desplegar en Servidor
+#### Deploy to Server
 
 ```bash
-# En el servidor
-docker pull tu-usuario/ghg-emissions:latest
-docker run -d -p 80:80 --name ghg-emissions --restart always tu-usuario/ghg-emissions:latest
+# On the server
+docker pull your-username/ghg-emissions:latest
+docker run -d -p 80:80 --name ghg-emissions --restart always your-username/ghg-emissions:latest
 ```
 
 ---
 
-## 📜 Scripts Disponibles
+## 📜 Available Scripts
 
 ```bash
-# Desarrollo
-npm start              # Ejecutar en modo desarrollo
-npm run build          # Construir para producción
-npm run watch          # Build en modo watch
+# Development
+npm start              # Run in development mode
+npm run build          # Build for production
+npm run watch          # Build in watch mode
 
 # Testing
-npm test               # Ejecutar tests con Vitest
-npm run test:watch     # Tests en modo watch
-npm run test:ng        # Tests con Karma/Jasmine
+npm test               # Run tests with Vitest
+npm run test:watch     # Tests in watch mode
+npm run test:ng        # Tests with Karma/Jasmine
 
 # Docker
-docker-compose up -d   # Ejecutar con Docker Compose
-docker-compose down    # Detener contenedores
-docker-compose logs -f # Ver logs
+docker-compose up -d   # Run with Docker Compose
+docker-compose down    # Stop containers
+docker-compose logs -f # View logs
 
-# Utilidades
+# Utilities
 npm run ng             # Angular CLI
 ```
 
 ---
 
-## 🎯 Características Técnicas
+## 🎯 Technical Features
 
 ### Performance
 
-- ✅ Lazy Loading de rutas
-- ✅ Change Detection optimizado
-- ✅ Compresión gzip en Nginx
-- ✅ Cache de assets estáticos
-- ✅ Build optimizado para producción
-- ✅ Code splitting automático
+- ✅ Route lazy loading
+- ✅ Optimized change detection
+- ✅ Gzip compression in Nginx
+- ✅ Static asset caching
+- ✅ Production-optimized build
+- ✅ Automatic code splitting
 
-### Accesibilidad (A11y)
+### Accessibility (A11y)
 
-- ✅ Navegación completa por teclado
-- ✅ ARIA labels y roles apropiados
-- ✅ Contraste de colores WCAG AA
+- ✅ Complete keyboard navigation
+- ✅ Appropriate ARIA labels and roles
+- ✅ WCAG AA color contrast
 - ✅ Skip links
 - ✅ Screen reader support
-- ✅ Heading hierarchy correcta
+- ✅ Correct heading hierarchy
 
 ### Responsive Design
 
 - ✅ Mobile-first approach
-- ✅ Breakpoints para tablets y desktop
-- ✅ Layouts adaptativos
-- ✅ Componentes responsive
+- ✅ Breakpoints for tablets and desktop
+- ✅ Adaptive layouts
+- ✅ Responsive components
 
 ### SEO
 
-- ✅ Meta tags optimizados
+- ✅ Optimized meta tags
 - ✅ Semantic HTML
 - ✅ Sitemap ready
 - ✅ Open Graph tags
 
-### Seguridad
+### Security
 
-- ✅ Headers de seguridad en Nginx
+- ✅ Security headers in Nginx
 - ✅ XSS Protection
 - ✅ Content Security Policy ready
-- ✅ Sanitización de inputs
+- ✅ Input sanitization
 
 ---
 
-## 📊 Métricas de Calidad
+## 📊 Quality Metrics
 
-- **TypeScript**: Modo estricto habilitado
-- **Linting**: Configurado con Angular ESLint
-- **Testing**: 48 tests unitarios (100% de lógica crítica)
-- **Build Size**: Optimizado para producción
-- **Performance**: Lighthouse score optimizado
+- **TypeScript**: Strict mode enabled
+- **Linting**: Configured with Angular ESLint
+- **Testing**: 48 unit tests (100% of critical logic)
+- **Build Size**: Optimized for production
+- **Performance**: Optimized Lighthouse score
 - **Accessibility**: WCAG 2.1 compliant
 
 ---
 
-## 🔄 Flujo de Desarrollo
+## 🔄 Development Flow
 
-1. **Feature Branch**: Crear branch desde `main`
-2. **Desarrollo**: Implementar feature siguiendo Clean Architecture
-3. **Testing**: Escribir y ejecutar tests
-4. **Review**: Code review y verificación
-5. **Merge**: Integrar a `main`
-6. **Deploy**: Despliegue automático a Vercel
-
----
-
-## 📚 Documentación Adicional
-
-- [GUIA_DOCKER.md](./GUIA_DOCKER.md) - Guía completa de Docker
-- [GUIA_IMPLEMENTACION.md](./GUIA_IMPLEMENTACION.md) - Guía de implementación
-- [ESTRUCTURA_PROYECTO.md](./ESTRUCTURA_PROYECTO.md) - Estructura detallada
-- [RESULTADOS_TESTS_FINAL.md](./RESULTADOS_TESTS_FINAL.md) - Resultados de tests
+1. **Feature Branch**: Create branch from `main`
+2. **Development**: Implement feature following Clean Architecture
+3. **Testing**: Write and run tests
+4. **Review**: Code review and verification
+5. **Merge**: Integrate to `main`
+6. **Deploy**: Automatic deployment to Vercel
 
 ---
 
-## 📞 Contacto
+## 📚 Additional Documentation
 
-Para cualquier consulta o colaboración:
+- [GUIA_DOCKER.md](./GUIA_DOCKER.md) - Complete Docker guide
+- [GUIA_IMPLEMENTACION.md](./GUIA_IMPLEMENTACION.md) - Implementation guide
+- [ESTRUCTURA_PROYECTO.md](./ESTRUCTURA_PROYECTO.md) - Detailed structure
+- [RESULTADOS_TESTS_FINAL.md](./RESULTADOS_TESTS_FINAL.md) - Test results
+
+---
+
+## 📞 Contact
+
+For any inquiries or collaboration:
 
 - 📧 **Email**: [alvarezjfernandog@gmail.com](mailto:alvarezjfernandog@gmail.com)
-- 📱 **Teléfono**: +57 302 285 60 79
+- 📱 **Phone**: +57 302 285 60 79
 - 💼 **LinkedIn**: [Juan Fernando Álvarez Gallego](https://www.linkedin.com/in/juan-fernando-%C3%A1lvarez-gallego-b97b31212/)
 - 🌐 **Portfolio**: [GHG Emissions Dashboard](https://ghg-emissions.vercel.app/emissions)
 
 ---
 
-**Desarrollado con ❤️ por Juan Fernando Álvarez Gallego**  
-**Prueba Técnica para Anthesis**
+**Developed with ❤️ by Juan Fernando Álvarez Gallego**  
+**Technical Test for Anthesis**
 
 ---
 
 ## 📝 Changelog
 
-### Versión 1.0.0
-- ✅ Implementación inicial del dashboard
-- ✅ Sistema de filtros avanzado
-- ✅ Visualizaciones con Chart.js
-- ✅ Modo oscuro/claro
-- ✅ Dockerización completa
-- ✅ Despliegue en Vercel
-- ✅ Tests unitarios completos
-- ✅ Arquitectura Clean Architecture
-- ✅ Accesibilidad WCAG 2.1
+### Version 1.0.0
+- ✅ Initial dashboard implementation
+- ✅ Advanced filter system
+- ✅ Chart.js visualizations
+- ✅ Dark/light mode
+- ✅ Complete Dockerization
+- ✅ Vercel deployment
+- ✅ Complete unit tests
+- ✅ Clean Architecture
+- ✅ WCAG 2.1 accessibility
 
 ---
 
-## 🏢 Información del Proyecto
+## 🏢 Project Information
 
-**Tipo de Proyecto:** Prueba Técnica
-**Empresa:** Anthesis
-**Fecha de Desarrollo:** Diciembre 2025
-**Estado:** ✅ Completo y desplegado en producción
+**Project Type:** Technical Test  
+**Company:** Anthesis  
+**Development Date:** December 2025  
+**Status:** ✅ Complete and deployed in production
 
 ---
 
-**Última actualización**: Diciembre 2025
+**Last update**: December 2025
